@@ -13,6 +13,8 @@ export function getStaticPaths() {
 }
 
 const locale = Astro.params.locale as Locale;
+const repo = 'https://github.com/fsilvaortiz/byteknife';
+const email = 'contacto@fsilvao.dev';
 ---
 
 <Base locale={locale} title="ByteKnife" description={t(locale, 'site.tagline')}>
@@ -59,6 +61,24 @@ const locale = Astro.params.locale as Locale;
             </ul>
           </div>
         ))}
+      </div>
+    </section>
+
+    <section class="feedback" aria-labelledby="feedback-h">
+      <div class="sec-h">
+        <h2 id="feedback-h">{t(locale, 'feedback.title')}</h2>
+      </div>
+      <p>{t(locale, 'feedback.lede')}</p>
+      <div class="strip">
+        <a class="btn" href={`${repo}/issues/new?template=bug.yml`} rel="noopener">
+          {t(locale, 'feedback.bug')}
+        </a>
+        <a class="btn" href={`${repo}/issues/new?template=tool.yml`} rel="noopener">
+          {t(locale, 'feedback.idea')}
+        </a>
+        <a class="btn" href={`mailto:${email}`}>
+          {email}
+        </a>
       </div>
     </section>
 
