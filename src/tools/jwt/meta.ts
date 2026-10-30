@@ -1,4 +1,5 @@
 import type { ToolMeta } from '../../core/types';
+import { isJwt } from './logic';
 
 export const meta: ToolMeta = {
   id: 'jwt',
@@ -58,6 +59,5 @@ export const meta: ToolMeta = {
       labels: { jwt: 'JWT' },
     },
   },
-  detect: (input) =>
-    /^eyJ[\w-]*\.[\w-]+\.[\w-]*$/.test(input) ? { label: 'jwt', confidence: 0.95 } : null,
+  detect: (input) => (isJwt(input) ? { label: 'jwt', confidence: 0.95 } : null),
 };

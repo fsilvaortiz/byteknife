@@ -7,9 +7,11 @@ interface Props {
   /** Texto a copiar, o función que lo devuelve al momento del clic. */
   text: string | (() => string);
   class?: string;
+  /** Texto del botón, si no es «Copiar». */
+  label?: string | undefined;
 }
 
-export default function CopyButton({ locale, text, class: className = 'ghost' }: Props) {
+export default function CopyButton({ locale, text, class: className = 'ghost', label }: Props) {
   const onClick = async () => {
     const value = typeof text === 'function' ? text() : text;
     const ok = await copyText(value);
@@ -17,7 +19,7 @@ export default function CopyButton({ locale, text, class: className = 'ghost' }:
   };
   return (
     <button class={className} type="button" onClick={onClick}>
-      {t(locale, 'copy.button')}
+      {label ?? t(locale, 'copy.button')}
     </button>
   );
 }

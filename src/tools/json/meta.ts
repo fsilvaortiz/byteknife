@@ -1,4 +1,5 @@
 import type { ToolMeta } from '../../core/types';
+import { detectJson } from './logic';
 
 export const meta: ToolMeta = {
   id: 'json',
@@ -25,12 +26,7 @@ export const meta: ToolMeta = {
     },
   },
   detect(input) {
-    if (!/^[[{]/.test(input)) return null;
-    try {
-      JSON.parse(input);
-      return { label: 'valid', confidence: 0.9 };
-    } catch {
-      return { label: 'invalid', confidence: 0.4 };
-    }
+    const r = detectJson(input);
+    return r && { label: r, confidence: r === 'valid' ? 0.9 : 0.4 };
   },
 };

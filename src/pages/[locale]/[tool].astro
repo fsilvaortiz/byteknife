@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import FavoriteButton from '../../components/FavoriteButton';
+import ToolHost from '../../components/ToolHost';
 import { homePath, toolPath } from '../../core/paths';
 import { tools, toolsIn } from '../../core/registry';
 import { categories, type ToolMeta } from '../../core/types';
@@ -65,7 +66,7 @@ const text = tool.i18n[locale];
         <FavoriteButton client:load locale={locale} id={tool.id} />
       </header>
       <div class="tool" id="toolRoot" data-tool-id={tool.id}>
-        <p class="lede">{t(locale, 'tool.comingSoon')}</p>
+        <ToolHost client:load locale={locale} id={tool.id} />
       </div>
     </div>
   </div>
