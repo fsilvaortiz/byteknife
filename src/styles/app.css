@@ -1008,3 +1008,79 @@ input[type='range'] {
   top: 0;
   background: var(--panel);
 }
+
+/* selector de idioma */
+.langs {
+  display: flex;
+  gap: 2px;
+  flex: none;
+}
+.langs a {
+  font: 500 12px/1 var(--f-mono);
+  padding: 7px 6px;
+  border-radius: 5px;
+  color: var(--muted);
+  text-decoration: none;
+}
+.langs a:hover {
+  color: var(--ink);
+  background: var(--panel);
+}
+.langs a[aria-current] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* contenido de la herramienta (SEO) */
+.about {
+  margin-top: 48px;
+  max-width: 78ch;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+.about section + section {
+  margin-top: 36px;
+}
+.about h2 {
+  font: 700 22px/1.2 var(--f-display);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.about h3 {
+  font: 600 15px/1.4 var(--f-body);
+  color: var(--ink);
+  margin: 20px 0 8px;
+}
+.about p {
+  margin: 0 0 12px;
+}
+.about code {
+  font: 0.92em var(--f-mono);
+  background: var(--sunk);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.about figure {
+  margin: 0;
+  min-width: 0;
+}
+.about figcaption {
+  font: 600 11px/1 var(--f-body);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.about pre {
+  margin: 0;
+  font: 13px/1.55 var(--f-mono);
+  color: var(--ink);
+  background: var(--sunk);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 10px 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

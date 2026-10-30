@@ -3,7 +3,8 @@ import Base from '../../layouts/Base.astro';
 import NowStrip from '../../components/NowStrip';
 import PasteBox from '../../components/PasteBox';
 import PersonalStrip from '../../components/PersonalStrip';
-import { toolPath } from '../../core/paths';
+import { homePath, toolPath } from '../../core/paths';
+import { websiteLd } from '../../core/seo';
 import { tools, toolsIn } from '../../core/registry';
 import { categories } from '../../core/types';
 import { locales, t, type Locale } from '../../i18n';
@@ -13,9 +14,17 @@ export function getStaticPaths() {
 }
 
 const locale = Astro.params.locale as Locale;
+const description = t(locale, 'site.tagline');
+const url = new URL(homePath(locale), Astro.site).href;
 ---
 
-<Base locale={locale} title="ByteKnife" description={t(locale, 'site.tagline')}>
+<Base
+  locale={locale}
+  title={t(locale, 'home.title')}
+  description={description}
+  path=""
+  structuredData={[websiteLd({ url, locale, description })]}
+>
   <div class="wrap home">
     <section class="hero">
       <div>

@@ -1,14 +1,11 @@
-import es from './es.json';
-import en from './en.json';
-import pt from './pt.json';
+import { messages, type Messages } from '#i18n/messages';
+import type { Locale } from './locales';
 
-export const locales = ['es', 'en', 'pt'] as const;
-export type Locale = (typeof locales)[number];
-export const defaultLocale: Locale = 'es';
+export { defaultLocale, isLocale, locales, type Locale } from './locales';
 
-export type MessageKey = keyof typeof es;
+export type MessageKey = keyof Messages;
 
-export const messages: Record<Locale, Record<MessageKey, string>> = { es, en, pt };
+export { messages };
 
 export function t(
   locale: Locale,
@@ -18,8 +15,4 @@ export function t(
   return messages[locale][key].replace(/\{(\w+)\}/g, (m, name: string) =>
     name in params ? String(params[name]) : m,
   );
-}
-
-export function isLocale(value: unknown): value is Locale {
-  return (locales as readonly unknown[]).includes(value);
 }

@@ -2,8 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import FavoriteButton from '../../components/FavoriteButton';
 import ToolHost from '../../components/ToolHost';
+import { getEntry, render } from 'astro:content';
 import { homePath, toolPath } from '../../core/paths';
 import { tools, toolsIn } from '../../core/registry';
+import { faqPageLd, softwareApplicationLd } from '../../core/seo';
 import { categories, type ToolMeta } from '../../core/types';
 import { locales, t, type Locale } from '../../i18n';
 
@@ -16,12 +18,22 @@ export function getStaticPaths() {
 const locale = Astro.params.locale as Locale;
 const { tool } = Astro.props as { tool: ToolMeta };
 const text = tool.i18n[locale];
+const entry = await getEntry('tools', `${tool.id}/${locale}`);
+if (!entry) throw new Error(`Falta src/tools/${tool.id}/content/${locale}.md`);
+const { Content } = await render(entry);
+const { title, description, examples, faq } = entry.data;
+const url = new URL(toolPath(locale, tool.id), Astro.site).href;
 ---
 
 <Base
   locale={locale}
-  title={t(locale, 'site.toolTitle', { name: text.name })}
-  description={text.description}
+  title={t(locale, 'site.toolTitle', { name: title })}
+  description={description}
+  path={`${tool.id}/`}
+  structuredData={[
+    softwareApplicationLd({ name: text.name, url, locale, description }),
+    faqPageLd({ url, locale, faq }),
+  ]}
 >
   <div class="wrap work">
     <nav class="rail" aria-label={t(locale, 'tool.rail')}>
@@ -68,13 +80,46 @@ const text = tool.i18n[locale];
       <div class="tool" id="toolRoot" data-tool-id={tool.id}>
         <ToolHost client:load locale={locale} id={tool.id} />
       </div>
+      <article class="about">
+        <section>
+          <h2>{t(locale, 'seo.about')}</h2>
+          <Content />
+        </section>
+        <section>
+          <h2>{t(locale, 'seo.examples')}</h2>
+          {examples.map((ex) => (
+            <div class="example">
+              <h3>{ex.title}</h3>
+              <div class="split">
+                <figure>
+                  <figcaption>{t(locale, 'seo.input')}</figcaption>
+                  <pre>{ex.input.trimEnd()}</pre>
+                </figure>
+                <figure>
+                  <figcaption>{t(locale, 'seo.output')}</figcaption>
+                  <pre>{ex.output.trimEnd()}</pre>
+                </figure>
+              </div>
+            </div>
+          ))}
+        </section>
+        <section>
+          <h2>{t(locale, 'seo.faq')}</h2>
+          {faq.map((f) => (
+            <div class="qa">
+              <h3>{f.q}</h3>
+              <p>{f.a}</p>
+            </div>
+          ))}
+        </section>
+      </article>
     </div>
   </div>
 </Base>
 
 <script>
   import { toolPath } from '../../core/paths';
-  import { isLocale } from '../../i18n';
+  import { isLocale } from '../../i18n/locales';
 
   const select = document.querySelector<HTMLSelectElement>('#mobSel');
   select?.addEventListener('change', () => {
