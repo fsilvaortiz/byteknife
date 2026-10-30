@@ -79,6 +79,37 @@ export interface ZoneRow {
   offset: string;
 }
 
+/**
+ * Minutos de diferencia con UTC en esa zona y ese instante (DST incluido). Se calcula a partir
+ * de la hora de pared y no con `timeZoneName: 'shortOffset'`, cuyo texto cambia entre versiones
+ * de ICU («GMT» vs «GMT+0»).
+ */
+export function zoneOffsetMinutes(date: Date, zone: string): number {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: zone,
+      hourCycle: 'h23',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    })
+      .formatToParts(date)
+      .map((p) => [p.type, Number(p.value)]),
+  ) as Record<'year' | 'month' | 'day' | 'hour' | 'minute', number>;
+  const wall = Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute);
+  return Math.round((wall - Math.floor(date.getTime() / 60_000) * 60_000) / 60_000);
+}
+
+/** «GMT», «GMT-4», «GMT+5:30». */
+export function formatOffset(minutes: number): string {
+  if (minutes === 0) return 'GMT';
+  const abs = Math.abs(minutes);
+  const mm = abs % 60;
+  return `GMT${minutes < 0 ? '-' : '+'}${Math.floor(abs / 60)}${mm ? `:${String(mm).padStart(2, '0')}` : ''}`;
+}
+
 /** La fecha en cada zona; las zonas que el navegador no conoce se omiten. */
 export function zoneRows(date: Date, zones: string[], locale: Locale): ZoneRow[] {
   return [...new Set(zones)].flatMap((zone) => {
@@ -88,11 +119,7 @@ export function zoneRows(date: Date, zones: string[], locale: Locale): ZoneRow[]
         dateStyle: 'medium',
         timeStyle: 'short',
       }).format(date);
-      const offset =
-        new Intl.DateTimeFormat('en', { timeZone: zone, timeZoneName: 'shortOffset' })
-          .formatToParts(date)
-          .find((p) => p.type === 'timeZoneName')?.value ?? '';
-      return [{ zone, text, offset }];
+      return [{ zone, text, offset: formatOffset(zoneOffsetMinutes(date, zone)) }];
     } catch {
       return [];
     }

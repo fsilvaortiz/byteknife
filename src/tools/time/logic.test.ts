@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_ZONES, formats, isTimestamp, localZone, parseTime, zoneRows } from './logic';
+import {
+  DEFAULT_ZONES,
+  formatOffset,
+  formats,
+  isTimestamp,
+  localZone,
+  parseTime,
+  zoneOffsetMinutes,
+  zoneRows,
+} from './logic';
 
 const now = new Date('2026-10-30T12:00:00Z');
 const iso = (raw: string) => parseTime(raw, now)?.date.toISOString();
@@ -82,6 +91,22 @@ describe('zoneRows', () => {
     const rows = zoneRows(date, ['UTC', 'America/Santiago', 'Asia/Kolkata'], 'en');
     expect(rows.map((r) => r.offset)).toEqual(['GMT', 'GMT-4', 'GMT+5:30']);
     expect(rows[2]!.text).toMatch(/5:30/);
+  });
+
+  it('calcula el offset con horario de verano y medias horas', () => {
+    expect(zoneOffsetMinutes(new Date('2026-01-15T12:00:00Z'), 'America/New_York')).toBe(-300);
+    expect(zoneOffsetMinutes(date, 'America/New_York')).toBe(-240);
+    expect(zoneOffsetMinutes(date, 'Asia/Kathmandu')).toBe(345);
+    expect(zoneOffsetMinutes(new Date('2026-07-01T12:00:59.999Z'), 'UTC')).toBe(0);
+  });
+
+  it.each([
+    [0, 'GMT'],
+    [-240, 'GMT-4'],
+    [330, 'GMT+5:30'],
+    [-570, 'GMT-9:30'],
+  ])('formatOffset(%i) → %s', (m, s) => {
+    expect(formatOffset(m)).toBe(s);
   });
 
   it('omite zonas desconocidas y repetidas', () => {
