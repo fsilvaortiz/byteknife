@@ -269,6 +269,12 @@ kbd {
   gap: 8px;
 }
 
+.feedback p {
+  color: var(--ink-2);
+  margin: 0 0 14px;
+  max-width: 64ch;
+}
+
 .foot {
   color: var(--muted);
   font-size: 13px;
