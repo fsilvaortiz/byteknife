@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+coverage/
+playwright-report/
+test-results/
+.env*
+.DS_Store
+
+# Symlink al CLAUDE.md del repo interno (directorio hermano)
+CLAUDE.md

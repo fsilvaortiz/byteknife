@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import { defaultLocale, t } from '../i18n';
+
+const locale = defaultLocale;
+---
+
+<Base locale={locale} title="ByteKnife" description={t(locale, 'site.tagline')}>
+  <main>
+    <h1>ByteKnife</h1>
+    <p>{t(locale, 'site.tagline')}</p>
+    <p class="muted">{t(locale, 'site.comingSoon')}</p>
+  </main>
+</Base>
+
+<style>
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 96px 16px;
+  }
+  h1 {
+    font: 800 48px/1.1 var(--f-display);
+    margin: 0 0 12px;
+  }
+  .muted {
+    color: var(--muted);
+  }
+</style>
