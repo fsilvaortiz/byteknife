@@ -1,4 +1,5 @@
 import type { ToolMeta } from '../../core/types';
+import { isUuid } from './logic';
 
 export const meta: ToolMeta = {
   id: 'uuid',
@@ -24,8 +25,5 @@ export const meta: ToolMeta = {
       labels: { uuid: 'UUID' },
     },
   },
-  detect: (input) =>
-    /^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$/i.test(input)
-      ? { label: 'uuid', confidence: 0.95 }
-      : null,
+  detect: (input) => (isUuid(input) ? { label: 'uuid', confidence: 0.95 } : null),
 };

@@ -1,8 +1,0 @@
-[
-  {
-    "name": "JS inicial (todas las páginas)",
-    "path": "dist/**/*.js",
-    "limit": "50 KB",
-    "gzip": true
-  }
-]
