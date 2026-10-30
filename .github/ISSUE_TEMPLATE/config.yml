@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Reportar una vulnerabilidad
+    url: https://github.com/fsilvaortiz/byteknife/security/advisories/new
+    about: Fugas de datos, XSS o recursos de terceros. Se reportan en privado.
