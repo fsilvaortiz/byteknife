@@ -1,5 +1,6 @@
-import { base64ToBytes } from '../base64/logic';
+import { base64ToBytes } from '../base64/detect';
 import { bytesToBase64, toBase64Url, utf8Bytes } from '../../ui/format';
+export { isJwt } from './detect';
 
 export type JwtErrorCode = 'parts' | 'header' | 'payload';
 
@@ -102,5 +103,3 @@ export async function verifyHmac(jwt: DecodedJwt, secret: string): Promise<Verif
     result: toBase64Url(bytesToBase64(mac)) === sig.replace(/=+$/, '') ? 'valid' : 'invalid',
   };
 }
-
-export const isJwt = (s: string) => /^eyJ[\w-]*\.[\w-]+\.[\w-]*$/.test(s);

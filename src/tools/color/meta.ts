@@ -1,4 +1,5 @@
 import type { ToolMeta } from '../../core/types';
+import { isColor } from './detect';
 
 export const meta: ToolMeta = {
   id: 'color',
@@ -59,9 +60,5 @@ export const meta: ToolMeta = {
       labels: { color: 'Cor' },
     },
   },
-  detect: (input) =>
-    /^#([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(input) ||
-    /^(rgb|hsl|oklch|lab|hwb)a?\(.+\)$/i.test(input)
-      ? { label: 'color', confidence: 0.9 }
-      : null,
+  detect: (input) => (isColor(input) ? { label: 'color', confidence: 0.9 } : null),
 };

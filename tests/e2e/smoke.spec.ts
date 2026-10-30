@@ -21,12 +21,19 @@ for (const path of [
   '/es/password/',
   '/es/time/',
   '/es/cron/',
+  '/es/regex/',
+  '/es/diff/',
+  '/es/case/',
+  '/es/color/',
+  '/es/base/',
   '/en/cron/',
 ]) {
   test(`${path} no tiene violaciones de accesibilidad`, async ({ page }) => {
     await page.goto(path);
     await page.waitForLoadState('networkidle');
-    const results = await new AxeBuilder({ page }).analyze();
+    // .swatch es la vista previa del color del usuario: muestra texto blanco y negro encima
+    // justamente para enseñar cuándo el contraste no alcanza (la tabla al lado lo informa).
+    const results = await new AxeBuilder({ page }).exclude('.swatch').analyze();
     expect(results.violations).toEqual([]);
   });
 }

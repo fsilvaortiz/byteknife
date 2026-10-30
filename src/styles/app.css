@@ -997,3 +997,14 @@ input[type='range'] {
 .pane > .list {
   align-self: start;
 }
+
+.diff th {
+  padding: 3px 8px;
+  text-align: left;
+  font-weight: 600;
+  white-space: pre;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: var(--panel);
+}

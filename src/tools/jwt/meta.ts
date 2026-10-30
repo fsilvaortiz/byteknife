@@ -1,5 +1,5 @@
 import type { ToolMeta } from '../../core/types';
-import { isJwt } from './logic';
+import { isJwt } from './detect';
 
 export const meta: ToolMeta = {
   id: 'jwt',

@@ -1,5 +1,5 @@
 import type { ToolMeta } from '../../core/types';
-import { isHttpUrl } from './logic';
+import { isHttpUrl } from './detect';
 
 export const meta: ToolMeta = {
   id: 'url',

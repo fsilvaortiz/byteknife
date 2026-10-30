@@ -1,5 +1,5 @@
 import type { ToolMeta } from '../../core/types';
-import { isTimestamp } from './logic';
+import { isTimestamp } from './detect';
 
 export const meta: ToolMeta = {
   id: 'time',
