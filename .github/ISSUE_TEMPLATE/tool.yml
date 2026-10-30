@@ -1,0 +1,30 @@
+name: Herramienta nueva
+description: Propón una utilidad nueva o una mejora grande de una existente.
+labels: [herramienta]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Qué problema resuelve
+      description: Qué haces hoy y por qué te gustaría hacerlo en ByteKnife.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Ejemplo de entrada y salida
+    validations:
+      required: true
+  - type: textarea
+    id: detect
+    attributes:
+      label: Detección automática
+      description: Si se puede reconocer la entrada al pegarla, ¿cómo?
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Requisitos
+      options:
+        - label: Funciona 100 % en el navegador, sin enviar datos a ningún servidor.
+          required: true
+        - label: Me gustaría implementarla yo.

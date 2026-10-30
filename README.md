@@ -19,6 +19,10 @@ pnpm size      # presupuesto de JS
 
 El contrato para agregar herramientas está en [`docs/tool-contract.md`](docs/tool-contract.md).
 
+## Contribuir
+
+Lee [`CONTRIBUTING.md`](CONTRIBUTING.md). Las vulnerabilidades se reportan en privado según [`SECURITY.md`](SECURITY.md).
+
 ## Licencia
 
 [MIT](LICENSE)
