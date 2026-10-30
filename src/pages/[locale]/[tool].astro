@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import FavoriteButton from '../../components/FavoriteButton';
+import { homePath, toolPath } from '../../core/paths';
+import { tools, toolsIn } from '../../core/registry';
+import { categories, type ToolMeta } from '../../core/types';
+import { locales, t, type Locale } from '../../i18n';
+
+export function getStaticPaths() {
+  return locales.flatMap((locale) =>
+    tools.map((tool) => ({ params: { locale, tool: tool.id }, props: { tool } })),
+  );
+}
+
+const locale = Astro.params.locale as Locale;
+const { tool } = Astro.props as { tool: ToolMeta };
+const text = tool.i18n[locale];
+---
+
+<Base
+  locale={locale}
+  title={t(locale, 'site.toolTitle', { name: text.name })}
+  description={text.description}
+>
+  <div class="wrap work">
+    <nav class="rail" aria-label={t(locale, 'tool.rail')}>
+      {categories.map((c) => (
+        <>
+          <h4>{t(locale, `cat.${c}`)}</h4>
+          {toolsIn(c).map((x) => (
+            <a href={toolPath(locale, x.id)} aria-current={x.id === tool.id ? 'page' : undefined}>
+              {x.i18n[locale].name}
+            </a>
+          ))}
+        </>
+      ))}
+    </nav>
+    <div style="min-width:0">
+      <div class="mob-nav" style="margin-bottom:16px">
+        <a
+          class="btn sm"
+          href={homePath(locale)}
+          style="display:inline-flex;align-items:center;text-decoration:none"
+        >
+          {t(locale, 'tool.home')}
+        </a>
+        <select id="mobSel" aria-label={t(locale, 'tool.change')} data-locale={locale}>
+          {categories.map((c) => (
+            <optgroup label={t(locale, `cat.${c}`)}>
+              {toolsIn(c).map((x) => (
+                <option value={x.id} selected={x.id === tool.id}>
+                  {x.i18n[locale].name}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+      </div>
+      <header class="tool-head">
+        <div>
+          <p class="eyebrow">{t(locale, `cat.${tool.category}`)}</p>
+          <h1>{text.name}</h1>
+          <p class="lede">{text.description}</p>
+        </div>
+        <FavoriteButton client:load locale={locale} id={tool.id} />
+      </header>
+      <div class="tool" id="toolRoot" data-tool-id={tool.id}>
+        <p class="lede">{t(locale, 'tool.comingSoon')}</p>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { toolPath } from '../../core/paths';
+  import { isLocale } from '../../i18n';
+
+  const select = document.querySelector<HTMLSelectElement>('#mobSel');
+  select?.addEventListener('change', () => {
+    const locale = select.dataset.locale;
+    if (isLocale(locale)) window.location.assign(toolPath(locale, select.value));
+  });
+</script>

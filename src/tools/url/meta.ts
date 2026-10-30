@@ -1,0 +1,60 @@
+import type { ToolMeta } from '../../core/types';
+
+export const meta: ToolMeta = {
+  id: 'url',
+  category: 'encoding',
+  order: 2,
+  i18n: {
+    es: {
+      name: 'URL',
+      description: 'Codifica o decodifica componentes y desglosa una URL en partes y parámetros.',
+      keywords: [
+        'url',
+        'encode',
+        'decode',
+        'percent',
+        'query',
+        'string',
+        'parametros',
+        'uri',
+        'parse',
+        'codificar',
+      ],
+      labels: { url: 'URL' },
+    },
+    en: {
+      name: 'URL',
+      description: 'Encode or decode components and break a URL down into parts and parameters.',
+      keywords: [
+        'url',
+        'encode',
+        'decode',
+        'percent',
+        'query',
+        'string',
+        'parameters',
+        'uri',
+        'parse',
+      ],
+      labels: { url: 'URL' },
+    },
+    pt: {
+      name: 'URL',
+      description: 'Codifica ou decodifica componentes e separa uma URL em partes e parâmetros.',
+      keywords: [
+        'url',
+        'encode',
+        'decode',
+        'percent',
+        'query',
+        'string',
+        'parametros',
+        'uri',
+        'parse',
+        'codificar',
+      ],
+      labels: { url: 'URL' },
+    },
+  },
+  detect: (input) => (/^https?:\/\/\S+$/i.test(input) ? { label: 'url', confidence: 0.9 } : null),
+};
