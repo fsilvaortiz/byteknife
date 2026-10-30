@@ -97,7 +97,12 @@ kbd {
   text-wrap: balance;
 }
 .hero h1 mark {
-  background: linear-gradient(transparent 58%, var(--hl) 58%, var(--hl) 92%, transparent 92%);
+  background: linear-gradient(
+    transparent 58%,
+    var(--hl-band) 58%,
+    var(--hl-band) 92%,
+    transparent 92%
+  );
   color: inherit;
   padding: 0 0.04em;
 }
@@ -116,7 +121,7 @@ kbd {
   gap: 10px;
   box-shadow:
     0 1px 0 var(--line),
-    0 12px 32px -18px rgba(20, 24, 32, 0.25);
+    0 12px 32px -18px rgba(19, 32, 26, 0.25);
 }
 .paste label {
   font: 600 12px/1 var(--f-body);
