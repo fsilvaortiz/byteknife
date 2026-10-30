@@ -6,7 +6,18 @@ test('la raíz redirige al home en español', async ({ page }) => {
   await expect(page).toHaveURL(/\/es\/$/);
 });
 
-for (const path of ['/es/', '/en/', '/pt/', '/es/jwt/', '/en/cron/']) {
+for (const path of [
+  '/es/',
+  '/en/',
+  '/pt/',
+  '/es/json/',
+  '/es/csv/',
+  '/es/base64/',
+  '/es/url/',
+  '/es/jwt/',
+  '/es/escape/',
+  '/en/cron/',
+]) {
   test(`${path} no tiene violaciones de accesibilidad`, async ({ page }) => {
     await page.goto(path);
     await page.waitForLoadState('networkidle');

@@ -370,6 +370,7 @@ kbd {
 }
 .tool {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 
@@ -420,6 +421,8 @@ kbd {
 }
 .seg {
   display: inline-flex;
+  max-width: 100%;
+  overflow-x: auto;
   border: 1px solid var(--line-2);
   border-radius: var(--r);
   background: var(--panel);
@@ -971,4 +974,20 @@ input[type='range'] {
   .toast {
     transition: none;
   }
+}
+
+/* Oculto a la vista pero accesible para teclado y lectores de pantalla. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.btn:focus-within {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--hl) 55%, transparent);
 }

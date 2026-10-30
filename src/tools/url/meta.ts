@@ -1,4 +1,5 @@
 import type { ToolMeta } from '../../core/types';
+import { isHttpUrl } from './logic';
 
 export const meta: ToolMeta = {
   id: 'url',
@@ -56,5 +57,5 @@ export const meta: ToolMeta = {
       labels: { url: 'URL' },
     },
   },
-  detect: (input) => (/^https?:\/\/\S+$/i.test(input) ? { label: 'url', confidence: 0.9 } : null),
+  detect: (input) => (isHttpUrl(input) ? { label: 'url', confidence: 0.9 } : null),
 };
