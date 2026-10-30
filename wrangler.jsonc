@@ -1,0 +1,8 @@
+// Despliegue en Cloudflare Workers como sitio estático: solo sirve dist/, sin código de servidor.
+{
+  "name": "byteknife",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+  },
+}
