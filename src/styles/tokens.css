@@ -1,15 +1,16 @@
-/* Tokens de diseño del prototipo. Fuentes autoalojadas vía @fontsource. */
+/* Tokens de diseño (paleta «pizarra»). Fuentes autoalojadas vía @fontsource. */
 :root {
-  --bg: #f2f3f5;
-  --panel: #ffffff;
-  --sunk: #f7f8fa;
-  --ink: #121417;
-  --ink-2: #434a57;
-  --muted: #646b79; /* prototipo: #737b8b, no cumplía AA sobre --bg (3,8:1) */
-  --line: #dadde3;
-  --line-2: #c9cdd5;
-  --hl: #ffe24d;
-  --hl-ink: #1c1700;
+  --bg: #edf1ee;
+  --panel: #fbfcfb;
+  --sunk: #f3f6f4;
+  --ink: #13201a;
+  --ink-2: #3a4a42;
+  --muted: #566760; /* AA sobre --bg, --panel y --sunk */
+  --line: #d3dcd6;
+  --line-2: #bfcac3;
+  --hl: #9fe3bd;
+  --hl-ink: #0b2a1b;
+  --hl-band: var(--hl); /* subrayado del titular, bajo texto --ink */
   --ok: #18753f;
   --ok-bg: #e3f4ea;
   --bad: #b9332a;
@@ -17,10 +18,10 @@
   --warn: #8a5a00;
   --warn-bg: #fff2cc;
   /* Resaltado de sintaxis: clave, string, número, booleano */
-  --k: #2a4fd6;
-  --s: #1b7f46;
-  --n: #b5540b;
-  --b: #8a3fc2;
+  --k: #23599c;
+  --s: #1d7a4a;
+  --n: #a8551a;
+  --b: #7b48b5;
   --f-display:
     'Bricolage Grotesque Variable', 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
   --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -30,50 +31,52 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0e1013;
-    --panel: #16191e;
-    --sunk: #111317;
-    --ink: #eceef2;
-    --ink-2: #b9bfcb;
-    --muted: #808899;
-    --line: #262a32;
-    --line-2: #353a44;
-    --hl: #efd24a;
-    --hl-ink: #1c1700;
+    --bg: #0e1412;
+    --panel: #141c19;
+    --sunk: #111815;
+    --ink: #e4ede8;
+    --ink-2: #b0c0b7;
+    --muted: #8a9b92;
+    --line: #22302a;
+    --line-2: #314039;
+    --hl: #5fd39a;
+    --hl-ink: #062015;
+    --hl-band: #245a41;
     --ok: #4fc786;
     --ok-bg: #12291d;
     --bad: #ff7468;
     --bad-bg: #2e1513;
     --warn: #f2c14e;
     --warn-bg: #2b230f;
-    --k: #8da6ff;
-    --s: #6bd69a;
-    --n: #ffaa66;
-    --b: #d19bff;
+    --k: #8fb4f0;
+    --s: #74d6a2;
+    --n: #f0a868;
+    --b: #c8a2f5;
     color-scheme: dark;
   }
 }
 
 :root[data-theme='dark'] {
-  --bg: #0e1013;
-  --panel: #16191e;
-  --sunk: #111317;
-  --ink: #eceef2;
-  --ink-2: #b9bfcb;
-  --muted: #808899;
-  --line: #262a32;
-  --line-2: #353a44;
-  --hl: #efd24a;
-  --hl-ink: #1c1700;
+  --bg: #0e1412;
+  --panel: #141c19;
+  --sunk: #111815;
+  --ink: #e4ede8;
+  --ink-2: #b0c0b7;
+  --muted: #8a9b92;
+  --line: #22302a;
+  --line-2: #314039;
+  --hl: #5fd39a;
+  --hl-ink: #062015;
+  --hl-band: #245a41;
   --ok: #4fc786;
   --ok-bg: #12291d;
   --bad: #ff7468;
   --bad-bg: #2e1513;
   --warn: #f2c14e;
   --warn-bg: #2b230f;
-  --k: #8da6ff;
-  --s: #6bd69a;
-  --n: #ffaa66;
-  --b: #d19bff;
+  --k: #8fb4f0;
+  --s: #74d6a2;
+  --n: #f0a868;
+  --b: #c8a2f5;
   color-scheme: dark;
 }
