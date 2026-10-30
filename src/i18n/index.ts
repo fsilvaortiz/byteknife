@@ -10,6 +10,16 @@ export type MessageKey = keyof typeof es;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = { es, en, pt };
 
-export function t(locale: Locale, key: MessageKey): string {
-  return messages[locale][key];
+export function t(
+  locale: Locale,
+  key: MessageKey,
+  params: Record<string, string | number> = {},
+): string {
+  return messages[locale][key].replace(/\{(\w+)\}/g, (m, name: string) =>
+    name in params ? String(params[name]) : m,
+  );
+}
+
+export function isLocale(value: unknown): value is Locale {
+  return (locales as readonly unknown[]).includes(value);
 }

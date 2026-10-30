@@ -1,0 +1,60 @@
+import type { ToolMeta } from '../../core/types';
+
+export const meta: ToolMeta = {
+  id: 'case',
+  category: 'text',
+  order: 3,
+  i18n: {
+    es: {
+      name: 'Convertir mayúsculas',
+      description: 'camelCase, snake_case, kebab-case, CONSTANT_CASE, slugs y más a la vez.',
+      keywords: [
+        'case',
+        'camel',
+        'snake',
+        'kebab',
+        'pascal',
+        'constant',
+        'slug',
+        'title',
+        'mayusculas',
+        'minusculas',
+        'variable',
+      ],
+    },
+    en: {
+      name: 'Change case',
+      description: 'camelCase, snake_case, kebab-case, CONSTANT_CASE, slugs and more at once.',
+      keywords: [
+        'case',
+        'camel',
+        'snake',
+        'kebab',
+        'pascal',
+        'constant',
+        'slug',
+        'title',
+        'uppercase',
+        'lowercase',
+        'variable',
+      ],
+    },
+    pt: {
+      name: 'Converter maiúsculas',
+      description: 'camelCase, snake_case, kebab-case, CONSTANT_CASE, slugs e mais de uma vez.',
+      keywords: [
+        'case',
+        'camel',
+        'snake',
+        'kebab',
+        'pascal',
+        'constant',
+        'slug',
+        'title',
+        'maiusculas',
+        'minusculas',
+        'variavel',
+      ],
+    },
+  },
+};

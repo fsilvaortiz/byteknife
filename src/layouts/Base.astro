@@ -7,7 +7,12 @@ import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource-variable/bricolage-grotesque';
 import '../styles/tokens.css';
 import '../styles/base.css';
-import type { Locale } from '../i18n';
+import '../styles/app.css';
+import CommandPalette from '../components/CommandPalette';
+import SearchButton from '../components/SearchButton';
+import Toast from '../ui/Toast';
+import { homePath } from '../core/paths';
+import { t, type Locale } from '../i18n';
 
 interface Props {
   locale: Locale;
@@ -28,6 +33,18 @@ const { locale, title, description } = Astro.props;
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
-    <slot />
+    <header class="top">
+      <div class="top-in">
+        <a class="logo" href={homePath(locale)} aria-label={t(locale, 'logo.aria')}>
+          byteknife<span class="cur" aria-hidden="true"></span>
+        </a>
+        <SearchButton client:load locale={locale} />
+      </div>
+    </header>
+    <main id="app">
+      <slot />
+    </main>
+    <CommandPalette client:load locale={locale} />
+    <Toast client:idle />
   </body>
 </html>

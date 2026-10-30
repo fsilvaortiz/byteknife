@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro';
+import NowStrip from '../../components/NowStrip';
+import PasteBox from '../../components/PasteBox';
+import PersonalStrip from '../../components/PersonalStrip';
+import { toolPath } from '../../core/paths';
+import { tools, toolsIn } from '../../core/registry';
+import { categories } from '../../core/types';
+import { locales, t, type Locale } from '../../i18n';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+---
+
+<Base locale={locale} title="ByteKnife" description={t(locale, 'site.tagline')}>
+  <div class="wrap home">
+    <section class="hero">
+      <div>
+        <h1>
+          {t(locale, 'home.heroBefore')} <mark>{t(locale, 'home.heroMark')}</mark>
+          {t(locale, 'home.heroAfter')}
+        </h1>
+        <p>{t(locale, 'home.lede')}</p>
+      </div>
+      <PasteBox client:load locale={locale} />
+    </section>
+
+    <NowStrip client:load locale={locale} />
+
+    <PersonalStrip client:idle locale={locale} />
+
+    <section>
+      <div class="sec-h">
+        <h2>{t(locale, 'home.allTools')}</h2>
+        <small>
+          {t(locale, 'home.toolCount', { count: tools.length })} <kbd data-kbd-mod>Ctrl K</kbd>{' '}
+          {t(locale, 'home.jumpHint')}
+        </small>
+      </div>
+      <div class="catalog">
+        {categories.map((c) => (
+          <div class="cat">
+            <h3>{t(locale, `cat.${c}`)}</h3>
+            <ul>
+              {toolsIn(c).map((tool) => (
+                <li>
+                  <a class="tlink" href={toolPath(locale, tool.id)} data-tool={tool.id}>
+                    <b>{tool.i18n[locale].name}</b>
+                    <i hidden aria-hidden="true">
+                      ★
+                    </i>
+                    <span>{tool.i18n[locale].description}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span>{t(locale, 'footer.privacy')}</span>
+      <span>{t(locale, 'footer.storage')}</span>
+    </footer>
+  </div>
+</Base>
+
+<script>
+  import { effect } from '@preact/signals';
+  import { favorites } from '../../core/store';
+
+  // Marca con ★ los favoritos en el catálogo prerenderizado.
+  effect(() => {
+    const favs = favorites.value;
+    document.querySelectorAll<HTMLElement>('[data-tool]').forEach((a) => {
+      const star = a.querySelector('i');
+      if (star) star.hidden = !favs.includes(a.dataset.tool ?? '');
+    });
+  });
+</script>
