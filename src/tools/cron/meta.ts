@@ -1,5 +1,5 @@
 import type { ToolMeta } from '../../core/types';
-import { isCronExpression } from './logic';
+import { isCronExpression } from './detect';
 
 export const meta: ToolMeta = {
   id: 'cron',

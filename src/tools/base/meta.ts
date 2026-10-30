@@ -1,4 +1,5 @@
 import type { ToolMeta } from '../../core/types';
+import { isNumberLiteral } from './detect';
 
 export const meta: ToolMeta = {
   id: 'base',
@@ -54,6 +55,5 @@ export const meta: ToolMeta = {
       labels: { number: 'Número' },
     },
   },
-  detect: (input) =>
-    /^(0x[0-9a-f]+|0b[01]+|0o[0-7]+)$/i.test(input) ? { label: 'number', confidence: 0.8 } : null,
+  detect: (input) => (isNumberLiteral(input) ? { label: 'number', confidence: 0.8 } : null),
 };

@@ -6,6 +6,7 @@ Cada herramienta vive en `src/tools/<id>/` y el núcleo la descubre automáticam
 src/tools/jwt/
   meta.ts        id, categoría, nombre y descripción por idioma, keywords, detect()
   logic.ts       funciones puras: decode(), verifyHmac(), claimsTimeline()
+  detect.ts      (opcional) lo mínimo que necesita detect(); logic.ts lo re-exporta
   logic.test.ts  pruebas Vitest con casos borde
   Tool.tsx       island de Preact; recibe initialInput y usa los componentes compartidos
   content/       es.md, en.md, pt.md: explicación corta, ejemplos y FAQ para SEO
@@ -35,12 +36,12 @@ export interface ToolText {
 
 - `detect()` es pura y barata, con un límite de 5 ms. Corre sobre cada pegado en el home y en la búsqueda rápida. La herramienta con mayor `confidence` se abre al presionar Enter.
 - `detect()` devuelve una clave en `label`, no un texto: el texto visible va en `i18n[locale].labels[clave]`, en los tres idiomas.
-- Si `detect()` necesita lógica no trivial (por ejemplo, decodificar o parsear), esa lógica va en `logic.ts` y se prueba ahí.
+- Si `detect()` necesita lógica no trivial (por ejemplo, decodificar o parsear), esa lógica va en `detect.ts`, que `logic.ts` re-exporta y prueba. `meta.ts` importa de `detect.ts`, nunca de `logic.ts`: el registro carga todos los `meta.ts` en cada página y, si importa `logic.ts`, cada página arrastra la lógica completa de todas las herramientas.
 - La entrada que el usuario pegó en el home o en la búsqueda llega con `takePendingInput(id)` de `src/core/store.ts`; nunca viaja en la URL.
 - `Tool.tsx` abre siempre con un ejemplo realista y procesa la entrada en vivo con debounce.
 - La UI usa solo los componentes compartidos de `src/ui/` (`Pane`, `KeyValue`, `Segmented`, `CopyButton`, `Pill`, `CodeOutput`), para que el estilo sea consistente.
 - Las librerías externas se cargan solo dentro de la herramienta que las necesita, con `import()` dinámico.
-- `logic.ts` debe tener cobertura de pruebas de al menos 90 % antes de publicarse.
+- `logic.ts` y `detect.ts` deben tener cobertura de pruebas de al menos 90 % antes de publicarse.
 - Ninguna herramienta hace `fetch` con datos del usuario.
 
 ## Referencia

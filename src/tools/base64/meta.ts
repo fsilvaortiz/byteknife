@@ -1,5 +1,5 @@
 import type { ToolMeta } from '../../core/types';
-import { isBase64Text } from './logic';
+import { isBase64Text } from './detect';
 
 export const meta: ToolMeta = {
   id: 'base64',
