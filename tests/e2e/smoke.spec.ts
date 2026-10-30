@@ -16,6 +16,11 @@ for (const path of [
   '/es/url/',
   '/es/jwt/',
   '/es/escape/',
+  '/es/uuid/',
+  '/es/hash/',
+  '/es/password/',
+  '/es/time/',
+  '/es/cron/',
   '/en/cron/',
 ]) {
   test(`${path} no tiene violaciones de accesibilidad`, async ({ page }) => {

@@ -1,4 +1,5 @@
 import type { ToolMeta } from '../../core/types';
+import { isTimestamp } from './logic';
 
 export const meta: ToolMeta = {
   id: 'time',
@@ -59,9 +60,5 @@ export const meta: ToolMeta = {
       labels: { timestamp: 'Data / timestamp' },
     },
   },
-  detect: (input) =>
-    /^\d{10}(\d{3})?$/.test(input) ||
-    (/^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2})?/.test(input) && !Number.isNaN(Date.parse(input)))
-      ? { label: 'timestamp', confidence: 0.8 }
-      : null,
+  detect: (input) => (isTimestamp(input) ? { label: 'timestamp', confidence: 0.8 } : null),
 };

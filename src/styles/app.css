@@ -991,3 +991,9 @@ input[type='range'] {
   border-color: var(--ink);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--hl) 55%, transparent);
 }
+
+/* En un .split, la tabla o lista no se estira hasta la altura del panel vecino. */
+.pane > .kv,
+.pane > .list {
+  align-self: start;
+}

@@ -16,3 +16,6 @@ export function dayOfYear(d: Date): number {
 
 export const unixSeconds = (d: Date) => Math.floor(d.getTime() / 1000);
 export const isoUtc = (d: Date) => d.toISOString().replace(/\.\d+Z$/, 'Z');
+
+/** Zona horaria IANA del navegador. */
+export const localZone = () => Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
