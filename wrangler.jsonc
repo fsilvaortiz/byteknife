@@ -5,4 +5,6 @@
   "assets": {
     "directory": "./dist",
   },
+  // Vistas previas por rama (`wrangler preview`); sin bindings, así que el bloque va vacío.
+  "previews": {},
 }

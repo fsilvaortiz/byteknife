@@ -321,5 +321,14 @@
   "base.rep.hex": "Hexadecimal",
   "base.rep.bin": "Binario",
   "base.rep.oct": "Octal",
-  "base.char": "Carácter Unicode"
+  "base.char": "Carácter Unicode",
+  "home.title": "ByteKnife · Utilidades para desarrolladores en tu navegador",
+  "lang.nav": "Idioma",
+  "lang.name": "Español",
+  "seo.about": "Cómo funciona",
+  "seo.examples": "Ejemplos",
+  "seo.input": "Entrada",
+  "seo.output": "Resultado",
+  "seo.faq": "Preguntas frecuentes",
+  "root.choose": "Elige tu idioma"
 }

@@ -12,15 +12,23 @@ import CommandPalette from '../components/CommandPalette';
 import SearchButton from '../components/SearchButton';
 import Toast from '../ui/Toast';
 import { homePath } from '../core/paths';
-import { t, type Locale } from '../i18n';
+import { alternates, scriptJson } from '../core/seo';
+import { locales, messages, t, type Locale } from '../i18n';
 
 interface Props {
   locale: Locale;
   title: string;
   description: string;
+  /** Ruta sin idioma: '' para el home, 'json/' para una herramienta. */
+  path: string;
+  /** Datos estructurados (schema.org) de la página. */
+  structuredData?: object[];
 }
 
-const { locale, title, description } = Astro.props;
+const { locale, title, description, path, structuredData = [] } = Astro.props;
+const site = Astro.site!.href;
+const alts = alternates(site, path);
+const canonical = alts.find((a) => a.hreflang === locale)!.href;
 ---
 
 <!doctype html>
@@ -30,7 +38,23 @@ const { locale, title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alts.map((a) => (
+      <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+    ))}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ByteKnife" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    {structuredData.map((d) => (
+      <script type="application/ld+json" set:html={scriptJson(d)} />
+    ))}
+    {/* Diccionario del idioma de la página para las islas (src/i18n/messages.browser.ts). */}
+    <script id="bk-messages" type="application/json" set:html={scriptJson(messages[locale])} />
   </head>
   <body>
     <header class="top">
@@ -39,6 +63,20 @@ const { locale, title, description } = Astro.props;
           byteknife<span class="cur" aria-hidden="true"></span>
         </a>
         <SearchButton client:load locale={locale} />
+        <nav class="langs" aria-label={t(locale, 'lang.nav')}>
+          {locales.map((l) => (
+            <a
+              href={`/${l}/${path}`}
+              hreflang={l}
+              lang={l}
+              title={t(l, 'lang.name')}
+              data-locale-link={l}
+              aria-current={l === locale ? 'true' : undefined}
+            >
+              {l.toUpperCase()}
+            </a>
+          ))}
+        </nav>
       </div>
     </header>
     <main id="app">
@@ -48,3 +86,12 @@ const { locale, title, description } = Astro.props;
     <Toast client:idle />
   </body>
 </html>
+
+<script>
+  import { local, write } from '../core/storage';
+
+  // La raíz (/) usa esta elección en vez del idioma del navegador.
+  document.querySelectorAll<HTMLElement>('[data-locale-link]').forEach((a) => {
+    a.addEventListener('click', () => write(local, 'locale', a.dataset.localeLink));
+  });
+</script>

@@ -134,7 +134,7 @@ test.describe('vista de herramienta', () => {
   test('las páginas en inglés usan sus textos', async ({ page }) => {
     await ready(page, '/en/password/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Passwords');
-    await expect(page).toHaveTitle('Passwords · ByteKnife');
+    await expect(page).toHaveTitle('Secure random password generator · ByteKnife');
   });
 });
 

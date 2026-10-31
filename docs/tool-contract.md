@@ -32,6 +32,28 @@ export interface ToolText {
 }
 ```
 
+## Contenido SEO
+
+Cada idioma tiene su `content/<idioma>.md`, que la página de la herramienta muestra bajo la herramienta. El esquema está en `src/content.config.ts` y `src/core/content.test.ts` revisa que existan los tres idiomas:
+
+```md
+---
+title: 'Decodificar JWT y verificar la firma HS256' # <title>, hasta 60 caracteres
+description: 'Decodifica un JWT y lee…' # meta description, 70–160 caracteres
+examples: # exactamente 2; las salidas, copiadas de lo que muestra la herramienta
+  - title: 'Leer un token'
+    input: |
+      eyJhbGciOi…
+    output: |
+      …
+faq: # al menos 3; también se publican como JSON-LD FAQPage
+  - q: '¿Es seguro pegar un JWT de producción aquí?'
+    a: 'El token se procesa solo en esta pestaña…'
+---
+
+Explicación de 150–300 palabras: qué resuelve, opciones y casos de uso.
+```
+
 ## Reglas
 
 - `detect()` es pura y barata, con un límite de 5 ms. Corre sobre cada pegado en el home y en la búsqueda rápida. La herramienta con mayor `confidence` se abre al presionar Enter.
