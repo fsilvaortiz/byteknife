@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { locales, messages, t } from './index';
+import { locales, messages, t, tn } from './index';
 
 describe('i18n', () => {
   const reference = Object.keys(messages.es).sort();
@@ -22,5 +22,17 @@ describe('t()', () => {
 
   it('deja intactos los marcadores sin valor', () => {
     expect(t('en', 'search.openIn')).toBe('Open in {name}');
+  });
+});
+
+describe('tn()', () => {
+  it('usa singular solo para uno', () => {
+    expect(tn('es', 'unit.byte', 1)).toBe('1 byte');
+    expect(tn('en', 'unit.byte', 8)).toBe('8 bytes');
+    expect(tn('es', 'unit.bit', 0)).toBe('0 bits');
+  });
+
+  it('cae en .other si el idioma tiene una forma sin clave (many en es)', () => {
+    expect(tn('es', 'unit.byte', 1_000_000)).toBe('1000000 bytes');
   });
 });
