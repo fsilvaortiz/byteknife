@@ -29,6 +29,6 @@ Uma senha segura é, antes de tudo, longa e realmente aleatória. Esta ferrament
 
 Você pode ajustar o **comprimento** e os conjuntos de caracteres: maiúsculas, minúsculas, dígitos e símbolos. Cada senha inclui pelo menos um caractere de cada conjunto ativado, para atender políticas que exigem, por exemplo, um número e um símbolo. A opção **Evitar ambíguos** remove `I`, `l`, `1`, `O` e `0`, útil quando a senha vai ser lida em voz alta ou digitada à mão.
 
-Ao lado do resultado aparece a **entropia** estimada em bits e um rótulo de força. A entropia depende do comprimento e do alfabeto, não de a senha «parecer» difícil: somar quatro caracteres costuma ajudar mais do que adicionar símbolos.
+Ao lado do resultado aparece a **entropia** estimada em bits e um rótulo de força. A entropia depende do comprimento e do alfabeto, não de a senha «parecer» difícil: acrescentar quatro caracteres costuma ajudar mais do que adicionar símbolos.
 
 Use essas senhas em contas novas, segredos de API, credenciais de banco de dados ou variáveis de ambiente, e guarde-as em um gerenciador de senhas. Nada do que é gerado sai do seu navegador nem fica salvo nele.

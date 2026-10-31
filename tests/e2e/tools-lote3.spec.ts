@@ -101,6 +101,9 @@ test.describe('Bases numéricas', () => {
     await page.getByLabel('Número', { exact: true }).fill('128640');
     await expect(kv).toContainText('U+1F680');
 
+    await page.getByLabel('Número', { exact: true }).fill('0xFF');
+    await expect(page.locator('.pill.neu')).toHaveText('8 bits · 1 byte');
+
     await page.getByLabel('Base de entrada').selectOption('2');
     await expect(page.locator('.pill.bad')).toHaveText('Dígitos no válidos para esa base');
   });

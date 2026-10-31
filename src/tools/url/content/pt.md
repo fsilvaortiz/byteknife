@@ -9,7 +9,7 @@ examples:
       pre%C3%A7o%3D10%E2%82%AC%20%26%20frete%20gr%C3%A1tis
   - title: 'Separar uma URL com parâmetros'
     input: |
-      https://api.example.com:8443/v1/search?q=caf%C3%A9%20con%20leche&page=2#results
+      https://api.example.com:8443/v1/search?q=caf%C3%A9%20com%20leite&page=2#results
     output: |
       Protocolo   https:
       Host        api.example.com
@@ -17,7 +17,7 @@ examples:
       Caminho     /v1/search
       Fragmento   #results
       Origem      https://api.example.com:8443
-      q           café con leche
+      q           café com leite
       page        2
 faq:
   - q: 'Qual é a diferença entre codificar um componente e a URL completa?'

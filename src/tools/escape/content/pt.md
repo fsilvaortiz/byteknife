@@ -11,12 +11,12 @@ examples:
     input: |
       café ☕ 🚀
     output: |
-      café ☕ 🚀
+      caf\u00e9 \u2615 \ud83d\ude80
 faq:
   - q: 'Quais caracteres o modo HTML escapa?'
     a: 'Os cinco que podem quebrar a marcação ou abrir uma injeção: & < > " e a aspa simples. Ao desescapar, ele também entende entidades numéricas como &#233; ou &#xE9; e as entidades nomeadas mais comuns.'
   - q: 'Por que o emoji vira duas sequências \u?'
-    a: 'JavaScript e JSON representam caracteres fora do plano básico com um par substituto UTF-16. 🚀 é U+1F680 e se escreve 🚀; ao desescapar, o par volta a ser um único caractere.'
+    a: 'JavaScript e JSON representam caracteres fora do plano básico com um par substituto UTF-16. 🚀 é U+1F680 e se escreve \ud83d\ude80; ao desescapar, o par volta a ser um único caractere.'
   - q: 'Quando uso o modo string JSON?'
     a: 'Quando você precisa colocar texto com quebras de linha, tabulações, aspas ou barras invertidas dentro de uma string JSON ou JavaScript. O resultado é o conteúdo entre as aspas, pronto para colar.'
 ---

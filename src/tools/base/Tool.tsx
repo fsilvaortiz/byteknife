@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'preact/hooks';
 import type { ToolProps } from '../../components/ToolHost';
-import { t, type Locale } from '../../i18n';
+import { t, tn, type Locale } from '../../i18n';
 import KeyValue, { type KVRow } from '../../ui/KeyValue';
 import Pill from '../../ui/Pill';
 import { useDebounced } from '../../ui/useDebounced';
@@ -15,6 +15,12 @@ import {
 
 const SAMPLE = '0xCAFE_F00D';
 const BASES = ['auto', '10', '16', '2', '8'] as const;
+
+const bitsLabel = (locale: Locale, { bits, bytes }: { bits: number; bytes: number }) =>
+  t(locale, 'base.bits', {
+    bits: tn(locale, 'unit.bit', bits),
+    bytes: tn(locale, 'unit.byte', bytes),
+  });
 
 /** Separador de miles del idioma (punto en es/pt, coma en en). */
 const groupSeparator = (locale: Locale) =>
@@ -73,7 +79,7 @@ export default function BaseTool({ locale, initialInput }: ToolProps) {
           </select>
         </label>
         {parsed instanceof BaseError && <Pill tone="bad">{t(locale, 'base.invalid')}</Pill>}
-        {ok && <Pill tone="neu">{t(locale, 'base.bits', bitInfo(ok.magnitude))}</Pill>}
+        {ok && <Pill tone="neu">{bitsLabel(locale, bitInfo(ok.magnitude))}</Pill>}
       </div>
       {ok && <KeyValue locale={locale} rows={rows} />}
     </>

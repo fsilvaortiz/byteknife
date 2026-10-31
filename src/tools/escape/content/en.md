@@ -11,12 +11,12 @@ examples:
     input: |
       café ☕ 🚀
     output: |
-      café ☕ 🚀
+      caf\u00e9 \u2615 \ud83d\ude80
 faq:
   - q: 'Which characters does HTML mode escape?'
     a: 'The five that can break markup or open an injection: & < > " and the single quote. When unescaping, it also understands numeric entities such as &#233; or &#xE9; and the most common named entities.'
   - q: 'Why does an emoji become two \u sequences?'
-    a: 'JavaScript and JSON represent characters outside the Basic Multilingual Plane as a UTF-16 surrogate pair. 🚀 is U+1F680 and is written 🚀; when unescaping, the pair becomes a single character again.'
+    a: 'JavaScript and JSON represent characters outside the Basic Multilingual Plane as a UTF-16 surrogate pair. 🚀 is U+1F680 and is written \ud83d\ude80; when unescaping, the pair becomes a single character again.'
   - q: 'When should I use JSON string mode?'
     a: 'When you need to put text with line breaks, tabs, quotes or backslashes inside a JSON or JavaScript string. The output is the content between the quotes, ready to paste.'
 ---

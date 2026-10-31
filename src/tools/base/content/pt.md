@@ -10,7 +10,7 @@ examples:
       Hexadecimal    FF
       Binário        1111 1111
       Octal          377
-      8 bits · 1 bytes · U+00FF ÿ
+      8 bits · 1 byte · U+00FF ÿ
   - title: 'Um inteiro de 64 bits sem perder precisão'
     input: |
       18446744073709551615

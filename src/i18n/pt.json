@@ -90,7 +90,7 @@
   "b64.file": "Arquivo → data URI",
   "b64.invalid": "Não é Base64 válido",
   "b64.encStat": "{in} → {out} bytes",
-  "b64.textStat": "{bytes} bytes UTF-8",
+  "b64.textStat": "{bytes} UTF-8",
   "b64.binStat": "{size} binários (visão hex)",
   "url.decode": "Decodificar",
   "url.encode": "Codificar componente",
@@ -316,7 +316,7 @@
   "base.b2": "Binário",
   "base.b8": "Octal",
   "base.invalid": "Dígitos inválidos para essa base",
-  "base.bits": "{bits} bits · {bytes} bytes",
+  "base.bits": "{bits} · {bytes}",
   "base.rep.dec": "Decimal",
   "base.rep.hex": "Hexadecimal",
   "base.rep.bin": "Binário",
@@ -330,5 +330,8 @@
   "seo.input": "Entrada",
   "seo.output": "Resultado",
   "seo.faq": "Perguntas frequentes",
-  "root.choose": "Escolha seu idioma"
+  "unit.bit.one": "{count} bit",
+  "unit.bit.other": "{count} bits",
+  "unit.byte.one": "{count} byte",
+  "unit.byte.other": "{count} bytes"
 }
