@@ -36,7 +36,7 @@
   "feedback.lede": "Report it on GitHub or email me. Don't include sensitive data you pasted into the tools.",
   "feedback.bug": "Report a bug",
   "feedback.idea": "Suggest a tool",
-  "footer.privacy": "No accounts, no tracking, no server: everything is computed in your tab.",
+  "footer.privacy": "No accounts, no cookies: everything is computed in your tab. We only count page visits, never what you type.",
   "footer.storage": "Favorites and recents are stored only in this browser.",
   "cat.data": "Data",
   "cat.encoding": "Encoding",

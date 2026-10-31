@@ -36,7 +36,7 @@
   "feedback.lede": "Reporte no GitHub ou me escreva. Não inclua dados sensíveis que você colou nas ferramentas.",
   "feedback.bug": "Reportar um bug",
   "feedback.idea": "Sugerir uma ferramenta",
-  "footer.privacy": "Sem contas, sem rastreamento, sem servidor: o cálculo acontece na sua aba.",
+  "footer.privacy": "Sem contas nem cookies: o cálculo acontece na sua aba. Só contamos visitas por página, nunca o que você digita.",
   "footer.storage": "Favoritos e recentes ficam salvos apenas neste navegador.",
   "cat.data": "Dados",
   "cat.encoding": "Codificação",
