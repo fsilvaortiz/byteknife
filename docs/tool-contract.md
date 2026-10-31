@@ -64,7 +64,9 @@ Explicación de 150–300 palabras: qué resuelve, opciones y casos de uso.
 - La UI usa solo los componentes compartidos de `src/ui/` (`Pane`, `KeyValue`, `Segmented`, `CopyButton`, `Pill`, `CodeOutput`), para que el estilo sea consistente.
 - Las librerías externas se cargan solo dentro de la herramienta que las necesita, con `import()` dinámico.
 - `logic.ts` y `detect.ts` deben tener cobertura de pruebas de al menos 90 % antes de publicarse.
-- Ninguna herramienta hace `fetch` con datos del usuario.
+- Ninguna herramienta hace `fetch` con datos del usuario. El e2e `privacy.spec.ts` escribe un centinela en cada campo de cada herramienta y falla si aparece en la red o si sale una request a otro origen.
+- Nada de atributos `style="…"` en el HTML prerenderizado: la CSP los bloquea. Los estilos van en CSS; los que Preact aplica desde el cliente sí funcionan.
+- Al agregar una herramienta o cambiar su alto inicial, corre `pnpm build && pnpm preview` y luego `pnpm tool-heights`: regenera `src/styles/tool-heights.css`, la altura que se reserva mientras la herramienta carga para que el texto de abajo no salte. El e2e `layout.spec.ts` avisa si quedó desactualizada.
 
 ## Referencia
 

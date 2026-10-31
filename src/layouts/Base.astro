@@ -1,13 +1,9 @@
 ---
-import '@fontsource/ibm-plex-sans/400.css';
-import '@fontsource/ibm-plex-sans/500.css';
-import '@fontsource/ibm-plex-sans/600.css';
-import '@fontsource/ibm-plex-mono/400.css';
-import '@fontsource/ibm-plex-mono/500.css';
-import '@fontsource-variable/bricolage-grotesque';
+import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/app.css';
+import '../styles/tool-heights.css';
 import CommandPalette from '../components/CommandPalette';
 import SearchButton from '../components/SearchButton';
 import Toast from '../ui/Toast';
@@ -50,6 +46,8 @@ const canonical = alts.find((a) => a.hreflang === locale)!.href;
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap.xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#13201a" />
     {structuredData.map((d) => (
       <script type="application/ld+json" set:html={scriptJson(d)} />
     ))}
@@ -89,6 +87,9 @@ const canonical = alts.find((a) => a.hreflang === locale)!.href;
 
 <script>
   import { local, write } from '../core/storage';
+  import { registerServiceWorker } from '../core/sw-register';
+
+  registerServiceWorker();
 
   // La raíz (/) usa esta elección en vez del idioma del navegador.
   document.querySelectorAll<HTMLElement>('[data-locale-link]').forEach((a) => {

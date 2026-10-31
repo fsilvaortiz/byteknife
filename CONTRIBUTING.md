@@ -32,8 +32,11 @@ pnpm format:check   # pnpm format lo arregla
 pnpm test           # Vitest con cobertura
 pnpm build          # incluye astro check
 pnpm size           # presupuesto de JS
-pnpm e2e            # Playwright + axe
+pnpm lighthouse     # Lighthouse CI sobre dist/ (≥ 95; SEO = 100)
+pnpm e2e            # Playwright + axe, offline, privacidad y CSP
 ```
+
+`pnpm lighthouse` necesita Chrome; si no lo encuentra, apunta `CHROME_PATH` a un Chromium (por ejemplo, el que instala Playwright).
 
 ## Agregar o cambiar una herramienta
 
