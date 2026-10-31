@@ -1,10 +1,15 @@
-// Despliegue en Cloudflare Workers como sitio estático: solo sirve dist/, sin código de servidor.
+// Despliegue en Cloudflare Workers: sirve dist/ como sitio estático. Solo /api/* pasa por el
+// Worker (worker/index.ts), que cuenta visitas en Workers Analytics Engine.
 {
   "name": "byteknife",
   "compatibility_date": "2026-10-01",
+  "main": "worker/index.ts",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
   },
-  // Vistas previas por rama (`wrangler preview`); sin bindings, así que el bloque va vacío.
+  "analytics_engine_datasets": [{ "binding": "VISITS", "dataset": "byteknife_visits" }],
+  // Vistas previas por rama (`wrangler preview`): sin el binding VISITS, para que no cuenten.
   "previews": {},
 }

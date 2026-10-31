@@ -88,8 +88,10 @@ const canonical = alts.find((a) => a.hreflang === locale)!.href;
 <script>
   import { local, write } from '../core/storage';
   import { registerServiceWorker } from '../core/sw-register';
+  import { countVisit } from '../core/visit';
 
   registerServiceWorker();
+  countVisit();
 
   // La raíz (/) usa esta elección en vez del idioma del navegador.
   document.querySelectorAll<HTMLElement>('[data-locale-link]').forEach((a) => {
