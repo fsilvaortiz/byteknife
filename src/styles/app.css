@@ -331,8 +331,17 @@ kbd {
   background: var(--ink);
   color: var(--bg);
 }
+.work-main {
+  min-width: 0;
+}
 .mob-nav {
   display: none;
+  margin-bottom: 16px;
+}
+.mob-nav .btn {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .tool-head {

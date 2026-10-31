@@ -22,6 +22,7 @@ const alts = alternates(Astro.site!.href, '');
       <link rel="alternate" hreflang={a.hreflang} href={a.href} />
     ))}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
   </head>
   <body>
     <main class="root">
@@ -44,10 +45,12 @@ const alts = alternates(Astro.site!.href, '');
   import { pickLocale } from '../core/locale';
   import { homePath } from '../core/paths';
   import { local, read, write } from '../core/storage';
+  import { registerServiceWorker } from '../core/sw-register';
 
   document.querySelectorAll<HTMLElement>('[data-locale-link]').forEach((a) => {
     a.addEventListener('click', () => write(local, 'locale', a.dataset.localeLink));
   });
+  registerServiceWorker();
   window.location.replace(homePath(pickLocale(read(local, 'locale', null), navigator.languages)));
 </script>
 

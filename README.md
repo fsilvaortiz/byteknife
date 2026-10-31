@@ -15,6 +15,7 @@ pnpm test      # pruebas unitarias (Vitest)
 pnpm e2e       # pruebas end-to-end (Playwright)
 pnpm build     # build estático en dist/
 pnpm size      # presupuesto de JS
+pnpm lighthouse # Lighthouse CI con los umbrales del plan
 ```
 
 El contrato para agregar herramientas está en [`docs/tool-contract.md`](docs/tool-contract.md).

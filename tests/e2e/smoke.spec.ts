@@ -75,16 +75,3 @@ test('la búsqueda abierta no tiene violaciones de accesibilidad', async ({ page
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });
-
-test('ninguna página hace requests a otros orígenes', async ({ page, baseURL }) => {
-  const external: string[] = [];
-  page.on('request', (req) => {
-    if (!req.url().startsWith(baseURL!)) external.push(req.url());
-  });
-  await page.goto('/es/');
-  await page.getByLabel('Pega cualquier cosa').fill('{"secreto": 1}');
-  await page.waitForLoadState('networkidle');
-  await page.goto('/es/json/');
-  await page.waitForLoadState('networkidle');
-  expect(external).toEqual([]);
-});

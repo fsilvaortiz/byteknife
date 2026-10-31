@@ -28,6 +28,12 @@ export default function ToolHost({ locale, id }: { locale: Locale; id: string })
     );
   }, [id, load]);
 
+  // Con la herramienta montada, su contenedor deja de reservar altura (tool-heights.css).
+  useEffect(() => {
+    if (state || failed)
+      document.querySelector(`.tool[data-tool-id="${id}"]`)?.setAttribute('data-ready', '');
+  }, [id, state, failed]);
+
   if (!load) return <p class="lede">{t(locale, 'tool.comingSoon')}</p>;
   if (failed) return <p class="err">{t(locale, 'tool.loadFailed')}</p>;
   if (!state) return null;

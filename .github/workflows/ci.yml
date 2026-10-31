@@ -25,6 +25,14 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - run: pnpm size
+      # Lighthouse sobre dist/ con los umbrales del plan (lighthouserc.json).
+      - run: pnpm lighthouse
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: lighthouse-report/
+          retention-days: 7
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm e2e
       - if: failure()

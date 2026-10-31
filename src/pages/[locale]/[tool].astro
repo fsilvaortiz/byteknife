@@ -48,13 +48,9 @@ const url = new URL(toolPath(locale, tool.id), Astro.site).href;
         </>
       ))}
     </nav>
-    <div style="min-width:0">
-      <div class="mob-nav" style="margin-bottom:16px">
-        <a
-          class="btn sm"
-          href={homePath(locale)}
-          style="display:inline-flex;align-items:center;text-decoration:none"
-        >
+    <div class="work-main">
+      <div class="mob-nav">
+        <a class="btn sm" href={homePath(locale)}>
           {t(locale, 'tool.home')}
         </a>
         <select id="mobSel" aria-label={t(locale, 'tool.change')} data-locale={locale}>
