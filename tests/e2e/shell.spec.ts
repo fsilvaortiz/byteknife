@@ -146,3 +146,22 @@ test('el home muestra la hora y un UUID que se puede regenerar', async ({ page }
   await page.getByRole('button', { name: 'Otro' }).click();
   await expect(uuid).not.toHaveText(first!);
 });
+
+test.describe('reportar bugs o sugerencias', () => {
+  test('el home enlaza a las plantillas de issues y al correo', async ({ page }) => {
+    await ready(page, '/es/');
+    const section = page.getByRole('region', { name: '¿Encontraste un bug o tienes una idea?' });
+    await expect(section.getByRole('link', { name: 'Reportar un bug' })).toHaveAttribute(
+      'href',
+      'https://github.com/fsilvaortiz/byteknife/issues/new?template=bug.yml',
+    );
+    await expect(section.getByRole('link', { name: 'Sugerir una herramienta' })).toHaveAttribute(
+      'href',
+      'https://github.com/fsilvaortiz/byteknife/issues/new?template=tool.yml',
+    );
+    await expect(section.getByRole('link', { name: 'contacto@fsilvao.dev' })).toHaveAttribute(
+      'href',
+      'mailto:contacto@fsilvao.dev',
+    );
+  });
+});
