@@ -46,11 +46,14 @@ const alts = alternates(Astro.site!.href, '');
   import { homePath } from '../core/paths';
   import { local, read, write } from '../core/storage';
   import { registerServiceWorker } from '../core/sw-register';
+  import { countVisit } from '../core/visit';
 
   document.querySelectorAll<HTMLElement>('[data-locale-link]').forEach((a) => {
     a.addEventListener('click', () => write(local, 'locale', a.dataset.localeLink));
   });
   registerServiceWorker();
+  // Se cuenta aquí: después de redirigir, el origen externo (HN, Reddit…) ya no se ve.
+  countVisit();
   window.location.replace(homePath(pickLocale(read(local, 'locale', null), navigator.languages)));
 </script>
 

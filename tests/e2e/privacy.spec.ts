@@ -72,3 +72,19 @@ test('cada página declara la CSP', async ({ page }) => {
     expect(csp?.[1], path).toContain("default-src 'self'");
   }
 });
+
+test('el contador de visitas envía solo la ruta y el dominio de origen', async ({
+  page,
+  context,
+}) => {
+  const sent: string[] = [];
+  await context.route('**/api/visit', async (route) => {
+    sent.push(route.request().postData() ?? '');
+    await route.fulfill({ status: 204 });
+  });
+
+  await page.goto('/es/json/', { referer: 'https://news.ycombinator.com/item?id=1' });
+  await page.getByLabel('Entrada').fill(`{"secreto": "${CANARY}"}`);
+  await expect.poll(() => sent.length).toBe(1);
+  expect(JSON.parse(sent[0]!)).toEqual({ p: '/es/json/', r: 'news.ycombinator.com' });
+});

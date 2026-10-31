@@ -2,7 +2,7 @@
 
 Utilidades para desarrolladores que corren 100 % en el navegador: [byteknife.dev](https://byteknife.dev).
 
-Nada de lo que pegas sale de tu pestaña. No hay backend, cookies ni scripts de terceros.
+Nada de lo que pegas sale de tu pestaña. No hay cookies ni scripts de terceros. Lo único que llega al servidor es un contador anónimo de visitas: la ruta de la página y el dominio desde el que llegaste (ver [`docs/analytics.md`](docs/analytics.md)).
 
 ## Desarrollo
 
