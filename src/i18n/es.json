@@ -11,7 +11,7 @@
   "home.heroBefore": "Las herramientas que abres",
   "home.heroMark": "todos los días",
   "home.heroAfter": ", en una pestaña.",
-  "home.lede": "JSON, JWT, Base64, hashes, cron, regex, timestamps y más. Todo corre en tu navegador: lo que pegas aquí no viaja a ningún servidor.",
+  "home.lede": "JSON, JWT, Base64, hashes, cron, regex, IP/CIDR, certificados, SQL y más. Todo corre en tu navegador: lo que pegas aquí no viaja a ningún servidor.",
   "home.favorites": "Favoritos",
   "home.recent": "Usadas hace poco",
   "home.allTools": "Todas las herramientas",

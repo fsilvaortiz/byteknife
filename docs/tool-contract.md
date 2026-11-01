@@ -17,7 +17,7 @@ El tipo vive en `src/core/types.ts`:
 ```ts
 export interface ToolMeta {
   id: string; // slug estable: forma parte de la URL (/es/<id>/)
-  category: 'data' | 'encoding' | 'generators' | 'time' | 'text' | 'web';
+  category: 'data' | 'encoding' | 'generators' | 'time' | 'text' | 'web' | 'net';
   order: number; // posición dentro de su categoría en el catálogo y el rail
   i18n: Record<Locale, ToolText>;
   detect?: (input: string) => { label: string; confidence: number } | null;
@@ -62,7 +62,10 @@ Explicación de 150–300 palabras: qué resuelve, opciones y casos de uso.
 - La entrada que el usuario pegó en el home o en la búsqueda llega con `takePendingInput(id)` de `src/core/store.ts`; nunca viaja en la URL.
 - `Tool.tsx` abre siempre con un ejemplo realista y procesa la entrada en vivo con debounce.
 - La UI usa solo los componentes compartidos de `src/ui/` (`Pane`, `KeyValue`, `Segmented`, `CopyButton`, `Pill`, `CodeOutput`), para que el estilo sea consistente.
-- Las librerías externas se cargan solo dentro de la herramienta que las necesita, con `import()` dinámico.
+- Las librerías externas se cargan solo dentro de la herramienta que las necesita, con `import()` dinámico, desde `logic.ts` (por ejemplo, `await import('yaml')` dentro de la función). Si `logic.ts` las importa de forma estática, pesan en el JS inicial de la página.
+- Nada que genere código en tiempo de ejecución (`eval`, `new Function`): la CSP lo bloquea. Por eso JSON Schema usa `@cfworker/json-schema` y no ajv.
+- Las herramientas de referencia (códigos HTTP, puertos, directivas CSP) guardan sus datos en `data.ts`, con los textos de cada idioma en un `Record<Locale, string>`. Los nombres propios (protocolos, productos, cabeceras) no se traducen.
+- Datos grandes que no son código, como la base OUI de la herramienta MAC, se sirven como módulo virtual de Vite (`integrations/oui-data.mjs`) y se importan con `import()` solo donde se usan.
 - `logic.ts` y `detect.ts` deben tener cobertura de pruebas de al menos 90 % antes de publicarse.
 - Ninguna herramienta hace `fetch` con datos del usuario. El e2e `privacy.spec.ts` escribe un centinela en cada campo de cada herramienta y falla si aparece en la red o si sale una request a otro origen.
 - Nada de atributos `style="…"` en el HTML prerenderizado: la CSP los bloquea. Los estilos van en CSS; los que Preact aplica desde el cliente sí funcionan.
