@@ -8,6 +8,9 @@
 .tool:not([data-ready])[data-tool-id='case'] {
   min-height: 487px;
 }
+.tool:not([data-ready])[data-tool-id='chmod'] {
+  min-height: 402px;
+}
 .tool:not([data-ready])[data-tool-id='cidr'] {
   min-height: 734px;
 }
@@ -19,6 +22,9 @@
 }
 .tool:not([data-ready])[data-tool-id='csv'] {
   min-height: 381px;
+}
+.tool:not([data-ready])[data-tool-id='curl'] {
+  min-height: 479px;
 }
 .tool:not([data-ready])[data-tool-id='diff'] {
   min-height: 526px;
@@ -78,6 +84,9 @@
   .tool:not([data-ready])[data-tool-id='case'] {
     min-height: 487px;
   }
+  .tool:not([data-ready])[data-tool-id='chmod'] {
+    min-height: 402px;
+  }
   .tool:not([data-ready])[data-tool-id='cidr'] {
     min-height: 734px;
   }
@@ -89,6 +98,9 @@
   }
   .tool:not([data-ready])[data-tool-id='csv'] {
     min-height: 381px;
+  }
+  .tool:not([data-ready])[data-tool-id='curl'] {
+    min-height: 479px;
   }
   .tool:not([data-ready])[data-tool-id='diff'] {
     min-height: 526px;
@@ -149,6 +161,9 @@
   .tool:not([data-ready])[data-tool-id='case'] {
     min-height: 801px;
   }
+  .tool:not([data-ready])[data-tool-id='chmod'] {
+    min-height: 544px;
+  }
   .tool:not([data-ready])[data-tool-id='cidr'] {
     min-height: 1105px;
   }
@@ -160,6 +175,9 @@
   }
   .tool:not([data-ready])[data-tool-id='csv'] {
     min-height: 521px;
+  }
+  .tool:not([data-ready])[data-tool-id='curl'] {
+    min-height: 705px;
   }
   .tool:not([data-ready])[data-tool-id='diff'] {
     min-height: 772px;
@@ -220,6 +238,9 @@
   .tool:not([data-ready])[data-tool-id='case'] {
     min-height: 1024px;
   }
+  .tool:not([data-ready])[data-tool-id='chmod'] {
+    min-height: 606px;
+  }
   .tool:not([data-ready])[data-tool-id='cidr'] {
     min-height: 1139px;
   }
@@ -231,6 +252,9 @@
   }
   .tool:not([data-ready])[data-tool-id='csv'] {
     min-height: 565px;
+  }
+  .tool:not([data-ready])[data-tool-id='curl'] {
+    min-height: 739px;
   }
   .tool:not([data-ready])[data-tool-id='diff'] {
     min-height: 803px;

@@ -44,6 +44,11 @@ describe('detección: variantes', () => {
     ['IPv4', '192.168.1.10', 'cidr'],
     ['bloque CIDR', '10.0.0.0/8', 'cidr'],
     ['IPv6', '2001:db8::1', 'cidr'],
+    ['YAML', 'apiVersion: v1\nkind: Pod\nmetadata:\n  name: web', 'yaml'],
+    ['SQL', 'SELECT id, nombre FROM usuarios WHERE activo', 'sql'],
+    ['comando curl', "curl -X POST https://api.x.dev -d 'a=1'", 'curl'],
+    ['permisos de ls', '-rwxr-xr-x', 'chmod'],
+    ['comando chmod', 'chmod 600 ~/.ssh/id_ed25519', 'chmod'],
     ['certificado PEM', '-----BEGIN CERTIFICATE-----\nMIIB\n-----END CERTIFICATE-----', 'x509'],
     [
       'CSR PEM',

@@ -28,7 +28,11 @@ describe('registro de herramientas', () => {
   it('ordena por categoría y luego por order', () => {
     const order = tools.map((t) => `${categories.indexOf(t.category)}.${t.order}`);
     expect(order).toEqual([...order].sort());
-    expect(toolsIn('data').map((t) => t.id).slice(0, 2)).toEqual(['json', 'csv']);
+    expect(
+      toolsIn('data')
+        .map((t) => t.id)
+        .slice(0, 2),
+    ).toEqual(['json', 'csv']);
   });
 
   it.each(locales)('todas tienen nombre, descripción y keywords en %s', (locale) => {

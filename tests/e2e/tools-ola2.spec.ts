@@ -156,3 +156,53 @@ test.describe('JSON → tipos', () => {
     await expect(page.locator('.pill.bad')).toBeVisible();
   });
 });
+
+test.describe('curl → código', () => {
+  test('convierte el ejemplo a cada lenguaje y avisa errores', async ({ page }) => {
+    await open(page, '/es/curl/');
+    const out = region(page, 'Código generado');
+    await expect(out).toContainText(
+      'await fetch("https://api.ejemplo.dev/v2/pedidos?notificar=true"',
+    );
+    await expect(page.locator('.pill.neu')).toHaveText('POST api.ejemplo.dev');
+
+    await page.getByRole('button', { name: 'Python requests' }).click();
+    await expect(out).toContainText('"regalo": False');
+    await page.getByRole('button', { name: 'Go net/http' }).click();
+    await expect(out).toContainText('http.NewRequest("POST"');
+    await page.getByRole('button', { name: 'Java HttpClient' }).click();
+    await expect(out).toContainText('HttpRequest.newBuilder()');
+
+    await page.getByLabel('Comando curl').fill("curl 'https://x.dev");
+    await expect(page.locator('.pill.bad')).toHaveText('Hay una comilla sin cerrar');
+  });
+
+  test('abre con el comando pegado en el home', async ({ page }) => {
+    await open(page, '/es/');
+    await page.getByLabel('Pega cualquier cosa').fill('curl -I https://ejemplo.dev');
+    await page.getByLabel('Pega cualquier cosa').press('Enter');
+    await expect(page).toHaveURL(/\/es\/curl\/$/);
+    await expect(page.locator('.pill.neu')).toHaveText('HEAD ejemplo.dev');
+  });
+});
+
+test.describe('chmod', () => {
+  test('octal, casillas y modos simbólicos', async ({ page }) => {
+    await open(page, '/es/chmod/');
+    const kv = page.locator('.kv');
+    await expect(kv).toContainText('rwxr-xr-x');
+
+    await page.getByLabel('Otros: Ejecutar').uncheck();
+    await page.getByLabel('Otros: Leer').uncheck();
+    await expect(page.getByLabel('Permisos: octal, simbólico o comando')).toHaveValue('750');
+    await expect(kv).toContainText('chmod u=rwx,g=rx,o= archivo');
+
+    const input = page.getByLabel('Permisos: octal, simbólico o comando');
+    await input.fill('drwxrwxrwt');
+    await expect(kv).toContainText('1777');
+    await input.fill('777');
+    await expect(page.locator('.pill.warn')).toHaveText('Cualquiera puede escribir');
+    await input.fill('9');
+    await expect(page.locator('.pill.bad')).toHaveText('No es un modo válido');
+  });
+});
