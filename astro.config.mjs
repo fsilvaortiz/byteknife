@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import preact from '@astrojs/preact';
 import serviceWorker from './integrations/service-worker.mjs';
+import ouiData from './integrations/oui-data.mjs';
 import toolPreload from './integrations/tool-preload.mjs';
 
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
   // CSS en línea: una request menos antes del primer render (Astro calcula su hash para la CSP).
   build: { inlineStylesheets: 'always' },
   vite: {
+    plugins: [ouiData()],
     build: {
       rolldownOptions: {
         output: {

@@ -1107,3 +1107,112 @@ input[type='range'] {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+/* Lista de hallazgos como píldoras (Cookies, MAC, DNS). */
+.findings {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Vista previa de Markdown */
+.md-preview {
+  min-height: 360px;
+  padding: 4px 14px 14px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+}
+.md-preview :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--ink);
+  font-family: var(--f-display);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 18px 0 8px;
+}
+.md-preview h1 {
+  font-size: 26px;
+}
+.md-preview h2 {
+  font-size: 21px;
+}
+.md-preview h3 {
+  font-size: 17px;
+}
+.md-preview :is(p, ul, ol, blockquote, table, pre) {
+  margin: 0 0 12px;
+}
+.md-preview a {
+  color: var(--ink);
+  text-decoration: underline;
+}
+.md-preview code {
+  font: 0.92em var(--f-mono);
+  background: var(--sunk);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.md-preview pre {
+  font: 13px/1.55 var(--f-mono);
+  background: var(--sunk);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 10px 12px;
+  /* Sin scroll horizontal: un <pre> desplazable necesitaría foco de teclado propio. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.md-preview pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.md-preview blockquote {
+  border-left: 3px solid var(--line-2);
+  padding-left: 12px;
+  color: var(--muted);
+}
+.md-preview table {
+  border-collapse: collapse;
+}
+.md-preview :is(th, td) {
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+}
+.md-preview li:has(> .md-task) {
+  list-style: none;
+  margin-left: -1.2em;
+}
+.md-preview img {
+  max-width: 100%;
+}
+.md-blocked {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Generador de QR */
+.qr {
+  display: grid;
+  place-items: center;
+  padding: 12px;
+}
+.qr svg {
+  width: min(100%, 320px);
+  height: auto;
+  border-radius: 6px;
+}
+.stack {
+  display: grid;
+  gap: 10px;
+  padding: 10px 12px;
+}
+.stack .fld input,
+.stack .fld select {
+  width: 100%;
+}

@@ -119,9 +119,7 @@ export function audit(m: Message): Finding[] {
   return out;
 }
 
-export function cacheSummary(
-  m: Message,
-): {
+export function cacheSummary(m: Message): {
   kind: 'noStore' | 'noCache' | 'maxAge' | 'none';
   params: Record<string, string | number>;
 } | null {

@@ -24,7 +24,7 @@ describe('searchTools', () => {
   });
 
   it('busca por nombre de categoría', () => {
-    expect(ids('generadores')).toEqual(['uuid', 'hash', 'password', 'keypair']);
+    expect(ids('generadores')).toEqual(['uuid', 'hash', 'password', 'keypair', 'qr']);
     expect(ids('red')).toEqual(expect.arrayContaining(['cidr', 'x509']));
   });
 
