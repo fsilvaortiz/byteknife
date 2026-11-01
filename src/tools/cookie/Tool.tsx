@@ -37,7 +37,7 @@ function CookieCard({ locale, c }: { locale: Locale; c: SetCookie }) {
     key: t(locale, 'cookie.expires'),
     value:
       exp.kind === 'at'
-        ? `${exp.date!.toISOString()} (${relativeTime(exp.date!, now, locale)})`
+        ? `${exp.date!.toISOString().replace(/\.\d{3}Z$/, 'Z')} (${relativeTime(exp.date!, now, locale)})`
         : t(locale, `cookie.exp.${exp.kind}`),
   });
   rows.push({ key: 'Domain', value: c.domain ?? t(locale, 'cookie.hostOnly') });

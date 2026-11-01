@@ -26,7 +26,9 @@ for (const [width, query] of RANGES) {
     await page.goto(`${BASE}/es/${id}/`);
     await page.locator('#toolRoot[data-ready]').waitFor();
     await page.waitForLoadState('networkidle');
-    const h = await page.locator('#toolRoot').evaluate((el) => Math.floor(el.offsetHeight));
+    // Margen de seguridad: textos que dependen de Intl o de la fecha (CI usa otro ICU) pueden
+    // cambiar unos píxeles, y una reserva mayor que el contenido dejaría un hueco.
+    const h = await page.locator('#toolRoot').evaluate((el) => Math.floor(el.offsetHeight) - 16);
     lines.push(`  .tool:not([data-ready])[data-tool-id='${id}'] {\n    min-height: ${h}px;\n  }`);
   }
   rules.set(query, lines);
