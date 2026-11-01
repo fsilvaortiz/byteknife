@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { TOOL_IDS } from './tools';
 
 // Valida en el sitio compilado lo que el gate de F3 pide: sitemap, hreflang y JSON-LD.
 const SITE = 'https://byteknife.dev';
@@ -18,7 +19,7 @@ test('robots.txt permite todo y declara el sitemap', async ({ page }) => {
 
 test('el sitemap lista home y herramientas en los tres idiomas', async ({ page }) => {
   const urls = await sitemapUrls(page);
-  expect(urls).toHaveLength(17 * 3);
+  expect(urls).toHaveLength((TOOL_IDS.length + 1) * 3);
   for (const locale of ['es', 'en', 'pt']) {
     expect(urls).toContain(`${SITE}/${locale}/`);
     expect(urls).toContain(`${SITE}/${locale}/jwt/`);

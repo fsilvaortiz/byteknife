@@ -1,11 +1,16 @@
+import { existsSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { locales } from '../i18n';
 import { toolById, toolModulePaths, tools, toolsIn } from './registry';
 import { categories } from './types';
 
 describe('registro de herramientas', () => {
-  it('descubre las 16 herramientas del MVP', () => {
-    expect(tools).toHaveLength(16);
+  it('descubre todas las carpetas de src/tools con meta.ts', () => {
+    const dir = join(import.meta.dirname, '..', 'tools');
+    const folders = readdirSync(dir).filter((id) => existsSync(join(dir, id, 'meta.ts')));
+    expect(tools.map((t) => t.id).sort()).toEqual(folders.sort());
+    expect(tools.length).toBeGreaterThanOrEqual(16);
   });
 
   it('cada id es único y coincide con su carpeta', () => {
@@ -23,7 +28,11 @@ describe('registro de herramientas', () => {
   it('ordena por categoría y luego por order', () => {
     const order = tools.map((t) => `${categories.indexOf(t.category)}.${t.order}`);
     expect(order).toEqual([...order].sort());
-    expect(toolsIn('data').map((t) => t.id)).toEqual(['json', 'csv']);
+    expect(
+      toolsIn('data')
+        .map((t) => t.id)
+        .slice(0, 2),
+    ).toEqual(['json', 'csv']);
   });
 
   it.each(locales)('todas tienen nombre, descripción y keywords en %s', (locale) => {
