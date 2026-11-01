@@ -7,6 +7,7 @@ import Pane from '../../ui/Pane';
 import Pill, { type Tone } from '../../ui/Pill';
 import Segmented from '../../ui/Segmented';
 import { useDebounced } from '../../ui/useDebounced';
+import { useReady } from '../../ui/useReady';
 import { convert, type ConvertResult, type YamlDir } from './logic';
 
 const SAMPLE = `# Despliegue de ejemplo
@@ -40,7 +41,10 @@ const pill = (locale: Locale, r: ConvertResult, dir: YamlDir): { tone: Tone; tex
         text: t(locale, r.source === 'yaml' ? 'yaml.error' : 'json.error', { ...r.error }),
       };
 
-export default function YamlTool({ locale, initialInput }: ToolProps) {
+// El primer resultado es asíncrono: ToolHost reserva la altura hasta useReady.
+export const waitsForResult = true;
+
+export default function YamlTool({ locale, initialInput, onReady }: ToolProps) {
   const [input, setInput] = useState(initialInput ?? SAMPLE);
   const [dir, setDir] = useState<YamlDir>(
     initialInput && /^\s*[[{]/.test(initialInput) ? 'j2y' : 'y2j',
@@ -69,6 +73,8 @@ export default function YamlTool({ locale, initialInput }: ToolProps) {
   const outLabel = t(locale, dir === 'y2j' ? 'yaml.outJson' : 'yaml.outYaml');
   const status = result && src.trim() ? pill(locale, result, dir) : null;
 
+  useReady(result !== null, onReady);
+
   return (
     <>
       <div class="bar">
@@ -88,7 +94,6 @@ export default function YamlTool({ locale, initialInput }: ToolProps) {
             <option value={4}>{t(locale, 'json.indent4')}</option>
           </select>
         </label>
-        {status && <Pill tone={status.tone}>{status.text}</Pill>}
       </div>
       <div class="split">
         <Pane title={inLabel}>
@@ -100,7 +105,16 @@ export default function YamlTool({ locale, initialInput }: ToolProps) {
             onInput={(e) => setInput(e.currentTarget.value)}
           />
         </Pane>
-        <Pane title={outLabel} actions={<CopyButton locale={locale} text={output} />}>
+        {/* El estado va en la cabecera del panel: en la barra, al llegar, la haría saltar de línea. */}
+        <Pane
+          title={outLabel}
+          actions={
+            <span>
+              {status && <Pill tone={status.tone}>{status.text}</Pill>}{' '}
+              <CopyButton locale={locale} text={output} />
+            </span>
+          }
+        >
           <CodeOutput
             text={output}
             label={outLabel}

@@ -7,6 +7,7 @@ import Pane from '../../ui/Pane';
 import Pill from '../../ui/Pill';
 import Segmented from '../../ui/Segmented';
 import { useDebounced } from '../../ui/useDebounced';
+import { useReady } from '../../ui/useReady';
 import {
   ALGORITHMS,
   exportKeyPair,
@@ -20,7 +21,10 @@ type Format = 'ssh' | 'pem' | 'jwk';
 const pick = (out: KeyPairOutput, side: 'public' | 'private', fmt: Format) =>
   out[`${side}${fmt === 'ssh' ? 'Ssh' : fmt === 'pem' ? 'Pem' : 'Jwk'}`];
 
-export default function KeyPairTool({ locale }: ToolProps) {
+// El primer resultado es asíncrono: ToolHost reserva la altura hasta useReady.
+export const waitsForResult = true;
+
+export default function KeyPairTool({ locale, onReady }: ToolProps) {
   const [alg, setAlg] = useState<Algorithm>('ed25519');
   const [comment, setComment] = useState('');
   const [fmt, setFmt] = useState<Format>('ssh');
@@ -55,11 +59,15 @@ export default function KeyPairTool({ locale }: ToolProps) {
     };
   }, [pair, label]);
 
+  const show = (side: 'public' | 'private') => (out ? pick(out, side, fmt) : '');
+
   const formats: [Format, string][] = [
     ['ssh', 'OpenSSH'],
     ['pem', t(locale, 'kp.pem')],
     ['jwk', 'JWK'],
   ];
+
+  useReady(out !== null || failed, onReady);
 
   return (
     <>
@@ -103,32 +111,31 @@ export default function KeyPairTool({ locale }: ToolProps) {
           {t(locale, 'kp.unsupported')}
         </p>
       )}
-      {out && (
-        <div class="split">
-          <Pane
-            title={t(locale, 'kp.public')}
-            actions={<CopyButton locale={locale} text={pick(out, 'public', fmt)} />}
-          >
-            <CodeOutput
-              text={pick(out, 'public', fmt)}
-              wrap
-              style="min-height:220px"
-              label={t(locale, 'kp.public')}
-            />
-          </Pane>
-          <Pane
-            title={t(locale, 'kp.private')}
-            actions={<CopyButton locale={locale} text={pick(out, 'private', fmt)} />}
-          >
-            <CodeOutput
-              text={pick(out, 'private', fmt)}
-              wrap
-              style="min-height:220px"
-              label={t(locale, 'kp.private')}
-            />
-          </Pane>
-        </div>
-      )}
+      {/* Los paneles existen desde el inicio, vacíos, para que nada salte al generar. */}
+      <div class="split">
+        <Pane
+          title={t(locale, 'kp.public')}
+          actions={<CopyButton locale={locale} text={show('public')} />}
+        >
+          <CodeOutput
+            text={show('public')}
+            wrap
+            style="min-height:220px"
+            label={t(locale, 'kp.public')}
+          />
+        </Pane>
+        <Pane
+          title={t(locale, 'kp.private')}
+          actions={<CopyButton locale={locale} text={show('private')} />}
+        >
+          <CodeOutput
+            text={show('private')}
+            wrap
+            style="min-height:220px"
+            label={t(locale, 'kp.private')}
+          />
+        </Pane>
+      </div>
       <p class="note">{t(locale, fmt === 'ssh' ? 'kp.noteSsh' : 'kp.notePkcs')}</p>
     </>
   );

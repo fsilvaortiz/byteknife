@@ -72,7 +72,7 @@
   min-height: 328px;
 }
 .tool:not([data-ready])[data-tool-id='markdown'] {
-  min-height: 556px;
+  min-height: 441px;
 }
 .tool:not([data-ready])[data-tool-id='password'] {
   min-height: 327px;
@@ -87,7 +87,7 @@
   min-height: 579px;
 }
 .tool:not([data-ready])[data-tool-id='sql'] {
-  min-height: 563px;
+  min-height: 564px;
 }
 .tool:not([data-ready])[data-tool-id='time'] {
   min-height: 625px;
@@ -105,7 +105,7 @@
   min-height: 1016px;
 }
 .tool:not([data-ready])[data-tool-id='yaml'] {
-  min-height: 641px;
+  min-height: 642px;
 }
 @media (max-width: 960px) {
   .tool:not([data-ready])[data-tool-id='base'] {
@@ -181,7 +181,7 @@
     min-height: 328px;
   }
   .tool:not([data-ready])[data-tool-id='markdown'] {
-    min-height: 556px;
+    min-height: 441px;
   }
   .tool:not([data-ready])[data-tool-id='password'] {
     min-height: 327px;
@@ -196,7 +196,7 @@
     min-height: 579px;
   }
   .tool:not([data-ready])[data-tool-id='sql'] {
-    min-height: 563px;
+    min-height: 564px;
   }
   .tool:not([data-ready])[data-tool-id='time'] {
     min-height: 645px;
@@ -214,7 +214,7 @@
     min-height: 1117px;
   }
   .tool:not([data-ready])[data-tool-id='yaml'] {
-    min-height: 641px;
+    min-height: 642px;
   }
 }
 @media (max-width: 720px) {
@@ -291,7 +291,7 @@
     min-height: 528px;
   }
   .tool:not([data-ready])[data-tool-id='markdown'] {
-    min-height: 962px;
+    min-height: 847px;
   }
   .tool:not([data-ready])[data-tool-id='password'] {
     min-height: 361px;
@@ -306,7 +306,7 @@
     min-height: 1036px;
   }
   .tool:not([data-ready])[data-tool-id='sql'] {
-    min-height: 833px;
+    min-height: 834px;
   }
   .tool:not([data-ready])[data-tool-id='time'] {
     min-height: 1566px;
@@ -324,7 +324,7 @@
     min-height: 1883px;
   }
   .tool:not([data-ready])[data-tool-id='yaml'] {
-    min-height: 867px;
+    min-height: 868px;
   }
 }
 @media (max-width: 420px) {
@@ -401,7 +401,7 @@
     min-height: 562px;
   }
   .tool:not([data-ready])[data-tool-id='markdown'] {
-    min-height: 1010px;
+    min-height: 847px;
   }
   .tool:not([data-ready])[data-tool-id='password'] {
     min-height: 392px;
@@ -416,7 +416,7 @@
     min-height: 1036px;
   }
   .tool:not([data-ready])[data-tool-id='sql'] {
-    min-height: 877px;
+    min-height: 878px;
   }
   .tool:not([data-ready])[data-tool-id='time'] {
     min-height: 1616px;
@@ -434,6 +434,6 @@
     min-height: 2073px;
   }
   .tool:not([data-ready])[data-tool-id='yaml'] {
-    min-height: 911px;
+    min-height: 912px;
   }
 }

@@ -7,6 +7,7 @@ import Pane from '../../ui/Pane';
 import Pill from '../../ui/Pill';
 import Segmented from '../../ui/Segmented';
 import { useDebounced } from '../../ui/useDebounced';
+import { useReady } from '../../ui/useReady';
 import { renderMarkdown, stats } from './logic';
 
 const SAMPLE = `# Notas de la versión 2.15
@@ -35,7 +36,10 @@ Más detalles en [la documentación](https://docs.ejemplo.dev/pix).
 
 type View = 'preview' | 'html';
 
-export default function MarkdownTool({ locale, initialInput }: ToolProps) {
+// El primer resultado es asíncrono: ToolHost reserva la altura hasta useReady.
+export const waitsForResult = true;
+
+export default function MarkdownTool({ locale, initialInput, onReady }: ToolProps) {
   const [input, setInput] = useState(initialInput ?? SAMPLE);
   const [view, setView] = useState<View>('preview');
   const [html, setHtml] = useState('');
@@ -52,6 +56,8 @@ export default function MarkdownTool({ locale, initialInput }: ToolProps) {
   }, [src, locale]);
 
   const s = stats(src);
+
+  useReady(html !== '' || !src.trim(), onReady);
 
   return (
     <>

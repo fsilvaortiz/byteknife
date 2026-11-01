@@ -5,6 +5,7 @@ import Pane from '../../ui/Pane';
 import Pill from '../../ui/Pill';
 import Segmented from '../../ui/Segmented';
 import { useDebounced } from '../../ui/useDebounced';
+import { useReady } from '../../ui/useReady';
 import {
   contrast,
   makePng,
@@ -19,7 +20,10 @@ import {
 
 type Mode = 'text' | 'wifi';
 
-export default function QrTool({ locale, initialInput }: ToolProps) {
+// El primer resultado es asíncrono: ToolHost reserva la altura hasta useReady.
+export const waitsForResult = true;
+
+export default function QrTool({ locale, initialInput, onReady }: ToolProps) {
   const [mode, setMode] = useState<Mode>('text');
   const [text, setText] = useState(initialInput ?? 'https://byteknife.dev');
   const [ssid, setSsid] = useState('Oficina-5G');
@@ -58,6 +62,8 @@ export default function QrTool({ locale, initialInput }: ToolProps) {
   };
 
   const lowContrast = contrast(dark, light) < 4;
+
+  useReady(result !== null, onReady);
 
   return (
     <>
@@ -166,6 +172,8 @@ export default function QrTool({ locale, initialInput }: ToolProps) {
             <p class="err" role="alert">
               {t(locale, `qr.err.${result.code}`)}
             </p>
+          ) : !result ? (
+            <div class="qr" />
           ) : (
             result && (
               <>

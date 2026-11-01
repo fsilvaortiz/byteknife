@@ -6,6 +6,7 @@ import Pane from '../../ui/Pane';
 import Pill from '../../ui/Pill';
 import Segmented from '../../ui/Segmented';
 import { useDebounced } from '../../ui/useDebounced';
+import { useReady } from '../../ui/useReady';
 import { EC_PEM } from './fixtures';
 import {
   commonName,
@@ -84,7 +85,10 @@ function extensionRows(locale: Locale, d: Decoded): KVRow[] {
   });
 }
 
-export default function X509Tool({ locale, initialInput }: ToolProps) {
+// El primer resultado es asíncrono: ToolHost reserva la altura hasta useReady.
+export const waitsForResult = true;
+
+export default function X509Tool({ locale, initialInput, onReady }: ToolProps) {
   const [input, setInput] = useState(initialInput ?? EC_PEM);
   const [index, setIndex] = useState('0');
   const src = useDebounced(input, 150);
@@ -111,6 +115,8 @@ export default function X509Tool({ locale, initialInput }: ToolProps) {
       live = false;
     };
   }, [cert]);
+
+  useReady(fp !== null || !cert, onReady);
 
   return (
     <>

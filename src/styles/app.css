@@ -392,6 +392,9 @@ kbd {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 16px;
+  /* Mientras se reserva la altura (tool-heights.css), las filas no se estiran: el espacio
+     libre queda abajo y la herramienta no salta al quitar la reserva. */
+  align-content: start;
 }
 
 /* controls */
@@ -1120,7 +1123,9 @@ input[type='range'] {
 
 /* Vista previa de Markdown */
 .md-preview {
-  min-height: 360px;
+  /* Alto fijo: el HTML llega después de cargar marked y no debe empujar el contenido. */
+  height: 360px;
+  overflow-y: auto;
   padding: 4px 14px 14px;
   color: var(--ink-2);
   line-height: 1.6;
@@ -1201,6 +1206,8 @@ input[type='range'] {
   display: grid;
   place-items: center;
   padding: 12px;
+  /* El SVG llega después de cargar la librería: el hueco ya tiene su tamaño. */
+  min-height: 344px;
 }
 .qr svg {
   width: min(100%, 320px);

@@ -5,6 +5,7 @@ import Pane from '../../ui/Pane';
 import Pill from '../../ui/Pill';
 import Table from '../../ui/Table';
 import { useDebounced } from '../../ui/useDebounced';
+import { useReady } from '../../ui/useReady';
 import { parseErrorPosition, stripBom } from '../json/logic';
 import { draftOf, DRAFTS, validate, type Draft, type SchemaError } from './logic';
 
@@ -40,7 +41,10 @@ function parse(src: string, locale: Parameters<typeof t>[0]): Parsed {
   }
 }
 
-export default function JsonSchemaTool({ locale, initialInput }: ToolProps) {
+// El primer resultado es asíncrono: ToolHost reserva la altura hasta useReady.
+export const waitsForResult = true;
+
+export default function JsonSchemaTool({ locale, initialInput, onReady }: ToolProps) {
   const [schemaText, setSchemaText] = useState(SCHEMA);
   const [docText, setDocText] = useState(initialInput ?? DOC);
   const [draft, setDraft] = useState<Draft | 'auto'>('auto');
@@ -69,6 +73,8 @@ export default function JsonSchemaTool({ locale, initialInput }: ToolProps) {
     };
   }, [schema, doc, effective, locale]);
 
+  useReady(errors !== null || !schema.ok || !doc.ok, onReady);
+
   return (
     <>
       <div class="bar">
@@ -85,13 +91,6 @@ export default function JsonSchemaTool({ locale, initialInput }: ToolProps) {
             ))}
           </select>
         </label>
-        {errors && (
-          <Pill tone={errors.length ? 'bad' : 'ok'}>
-            {errors.length
-              ? tn(locale, 'jschema.invalid', errors.length)
-              : t(locale, 'jschema.valid')}
-          </Pill>
-        )}
       </div>
       <div class="split">
         <Pane title={t(locale, 'jschema.schema')}>
@@ -109,7 +108,18 @@ export default function JsonSchemaTool({ locale, initialInput }: ToolProps) {
             </p>
           )}
         </Pane>
-        <Pane title={t(locale, 'jschema.document')}>
+        <Pane
+          title={t(locale, 'jschema.document')}
+          actions={
+            errors && (
+              <Pill tone={errors.length ? 'bad' : 'ok'}>
+                {errors.length
+                  ? tn(locale, 'jschema.invalid', errors.length)
+                  : t(locale, 'jschema.valid')}
+              </Pill>
+            )
+          }
+        >
           <textarea
             class="code"
             spellcheck={false}
