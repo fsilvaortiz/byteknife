@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { TOOL_IDS } from './tools';
 
 test.describe('la raíz con navegador en español de Chile', () => {
   test.use({ locale: 'es-CL' });
@@ -34,29 +35,7 @@ test('el selector de idioma lleva a la misma herramienta y la raíz recuerda la 
   await expect(page).toHaveURL(/\/pt\/$/);
 });
 
-for (const path of [
-  '/es/',
-  '/en/',
-  '/pt/',
-  '/es/json/',
-  '/es/csv/',
-  '/es/base64/',
-  '/es/url/',
-  '/es/jwt/',
-  '/es/escape/',
-  '/es/uuid/',
-  '/es/hash/',
-  '/es/password/',
-  '/es/time/',
-  '/es/cron/',
-  '/es/regex/',
-  '/es/diff/',
-  '/es/case/',
-  '/es/color/',
-  '/es/base/',
-  '/en/cron/',
-  '/pt/jwt/',
-]) {
+for (const path of ['/es/', ...TOOL_IDS.map((id) => `/es/${id}/`), '/en/cron/', '/pt/jwt/']) {
   test(`${path} no tiene violaciones de accesibilidad`, async ({ page }) => {
     await page.goto(path);
     await page.waitForLoadState('networkidle');

@@ -89,3 +89,70 @@ test.describe('Certificados X.509', () => {
     await expect(page.locator('.pill.bad')).toHaveText('DER dañado o truncado');
   });
 });
+
+test.describe('YAML ⇄ JSON', () => {
+  test('convierte el ejemplo, cambia de dirección y avisa errores', async ({ page }) => {
+    await open(page, '/es/yaml/');
+    const out = region(page, 'Salida JSON');
+    await expect(out).toContainText('"imagen": "registry.ejemplo.dev/pagos:2.14.0"');
+    await expect(page.locator('.pill.neu')).toHaveText('1 documento YAML');
+
+    await page.getByRole('button', { name: 'JSON → YAML' }).click();
+    await expect(page.getByLabel('Entrada JSON')).toHaveValue(/"servicio": "pagos-api"/);
+    await expect(region(page, 'Salida YAML')).toContainText('servicio: pagos-api');
+
+    await page.getByRole('button', { name: 'YAML → JSON' }).click();
+    await page.getByLabel('Entrada YAML').fill('a: [1, 2\nb: 3');
+    await expect(page.locator('.pill.bad')).toContainText('línea');
+  });
+});
+
+test.describe('Formatear SQL', () => {
+  test('formatea, cambia mayúsculas y reporta errores', async ({ page }) => {
+    await open(page, '/es/sql/');
+    const out = region(page, 'SQL formateado');
+    await expect(out).toContainText('LEFT JOIN items i ON i.pedido_id = p.id');
+    await expect(page.locator('.pill.neu')).toHaveText('1 sentencia');
+
+    await page.getByRole('button', { name: 'minúsculas' }).click();
+    await expect(out).toContainText('left join items i on i.pedido_id = p.id');
+
+    await page.getByLabel('Consulta SQL').fill("select a from t where x = 'abc");
+    await expect(page.locator('.pill.bad')).toContainText('línea 1, columna');
+  });
+});
+
+test.describe('Diff de JSON', () => {
+  test('muestra cambios y respeta «ignorar orden»', async ({ page }) => {
+    await open(page, '/es/jsondiff/');
+    await expect(page.locator('.pill.ok')).toHaveText('+2');
+    await expect(page.locator('.pill.bad')).toHaveText('−1');
+    await expect(page.locator('.pill.warn')).toHaveText('~3');
+    await expect(region(page, 'Diferencias')).toContainText('$.limites.timeoutMs');
+
+    await page.getByLabel('Original').fill('{"roles": ["a", "b"]}');
+    await page.getByLabel('Modificado').fill('{"roles": ["b", "a"]}');
+    await expect(page.locator('.pill.warn')).toHaveText('~2');
+    await page.getByLabel('Ignorar el orden en arreglos').check();
+    await expect(page.locator('.pill.neu')).toHaveText('Sin diferencias');
+  });
+});
+
+test.describe('JSON → tipos', () => {
+  test('genera TypeScript, Java y Go', async ({ page }) => {
+    await open(page, '/es/jsontypes/');
+    const out = region(page, 'Tipos generados');
+    await expect(out).toContainText('export interface Cliente {');
+    await expect(out).toContainText('cupon?: string;');
+
+    await page.getByRole('button', { name: 'Go' }).click();
+    await expect(out).toContainText('AvatarURL any');
+
+    await page.getByRole('button', { name: 'Java' }).click();
+    await page.getByLabel('Nombre raíz').fill('Customer');
+    await expect(out).toContainText('public record Customer(');
+
+    await page.getByLabel('Entrada JSON').fill('{"a":');
+    await expect(page.locator('.pill.bad')).toBeVisible();
+  });
+});

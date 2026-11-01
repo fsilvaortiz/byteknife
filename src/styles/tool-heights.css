@@ -32,6 +32,12 @@
 .tool:not([data-ready])[data-tool-id='json'] {
   min-height: 438px;
 }
+.tool:not([data-ready])[data-tool-id='jsondiff'] {
+  min-height: 544px;
+}
+.tool:not([data-ready])[data-tool-id='jsontypes'] {
+  min-height: 627px;
+}
 .tool:not([data-ready])[data-tool-id='jwt'] {
   min-height: 593px;
 }
@@ -44,6 +50,9 @@
 .tool:not([data-ready])[data-tool-id='regex'] {
   min-height: 579px;
 }
+.tool:not([data-ready])[data-tool-id='sql'] {
+  min-height: 563px;
+}
 .tool:not([data-ready])[data-tool-id='time'] {
   min-height: 625px;
 }
@@ -55,6 +64,9 @@
 }
 .tool:not([data-ready])[data-tool-id='x509'] {
   min-height: 1016px;
+}
+.tool:not([data-ready])[data-tool-id='yaml'] {
+  min-height: 641px;
 }
 @media (max-width: 960px) {
   .tool:not([data-ready])[data-tool-id='base'] {
@@ -90,6 +102,12 @@
   .tool:not([data-ready])[data-tool-id='json'] {
     min-height: 438px;
   }
+  .tool:not([data-ready])[data-tool-id='jsondiff'] {
+    min-height: 544px;
+  }
+  .tool:not([data-ready])[data-tool-id='jsontypes'] {
+    min-height: 627px;
+  }
   .tool:not([data-ready])[data-tool-id='jwt'] {
     min-height: 593px;
   }
@@ -102,6 +120,9 @@
   .tool:not([data-ready])[data-tool-id='regex'] {
     min-height: 579px;
   }
+  .tool:not([data-ready])[data-tool-id='sql'] {
+    min-height: 563px;
+  }
   .tool:not([data-ready])[data-tool-id='time'] {
     min-height: 645px;
   }
@@ -113,6 +134,9 @@
   }
   .tool:not([data-ready])[data-tool-id='x509'] {
     min-height: 1117px;
+  }
+  .tool:not([data-ready])[data-tool-id='yaml'] {
+    min-height: 641px;
   }
 }
 @media (max-width: 720px) {
@@ -149,6 +173,12 @@
   .tool:not([data-ready])[data-tool-id='json'] {
     min-height: 664px;
   }
+  .tool:not([data-ready])[data-tool-id='jsondiff'] {
+    min-height: 650px;
+  }
+  .tool:not([data-ready])[data-tool-id='jsontypes'] {
+    min-height: 872px;
+  }
   .tool:not([data-ready])[data-tool-id='jwt'] {
     min-height: 931px;
   }
@@ -161,6 +191,9 @@
   .tool:not([data-ready])[data-tool-id='regex'] {
     min-height: 1036px;
   }
+  .tool:not([data-ready])[data-tool-id='sql'] {
+    min-height: 833px;
+  }
   .tool:not([data-ready])[data-tool-id='time'] {
     min-height: 1566px;
   }
@@ -172,6 +205,9 @@
   }
   .tool:not([data-ready])[data-tool-id='x509'] {
     min-height: 1883px;
+  }
+  .tool:not([data-ready])[data-tool-id='yaml'] {
+    min-height: 867px;
   }
 }
 @media (max-width: 420px) {
@@ -208,6 +244,12 @@
   .tool:not([data-ready])[data-tool-id='json'] {
     min-height: 708px;
   }
+  .tool:not([data-ready])[data-tool-id='jsondiff'] {
+    min-height: 650px;
+  }
+  .tool:not([data-ready])[data-tool-id='jsontypes'] {
+    min-height: 936px;
+  }
   .tool:not([data-ready])[data-tool-id='jwt'] {
     min-height: 950px;
   }
@@ -220,6 +262,9 @@
   .tool:not([data-ready])[data-tool-id='regex'] {
     min-height: 1036px;
   }
+  .tool:not([data-ready])[data-tool-id='sql'] {
+    min-height: 877px;
+  }
   .tool:not([data-ready])[data-tool-id='time'] {
     min-height: 1616px;
   }
@@ -231,5 +276,8 @@
   }
   .tool:not([data-ready])[data-tool-id='x509'] {
     min-height: 2073px;
+  }
+  .tool:not([data-ready])[data-tool-id='yaml'] {
+    min-height: 911px;
   }
 }
