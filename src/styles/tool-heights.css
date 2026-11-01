@@ -20,6 +20,9 @@
 .tool:not([data-ready])[data-tool-id='cron'] {
   min-height: 565px;
 }
+.tool:not([data-ready])[data-tool-id='csp'] {
+  min-height: 503px;
+}
 .tool:not([data-ready])[data-tool-id='csv'] {
   min-height: 381px;
 }
@@ -34,6 +37,12 @@
 }
 .tool:not([data-ready])[data-tool-id='hash'] {
   min-height: 404px;
+}
+.tool:not([data-ready])[data-tool-id='headers'] {
+  min-height: 773px;
+}
+.tool:not([data-ready])[data-tool-id='http'] {
+  min-height: 672px;
 }
 .tool:not([data-ready])[data-tool-id='json'] {
   min-height: 438px;
@@ -96,6 +105,9 @@
   .tool:not([data-ready])[data-tool-id='cron'] {
     min-height: 565px;
   }
+  .tool:not([data-ready])[data-tool-id='csp'] {
+    min-height: 503px;
+  }
   .tool:not([data-ready])[data-tool-id='csv'] {
     min-height: 381px;
   }
@@ -110,6 +122,12 @@
   }
   .tool:not([data-ready])[data-tool-id='hash'] {
     min-height: 424px;
+  }
+  .tool:not([data-ready])[data-tool-id='headers'] {
+    min-height: 773px;
+  }
+  .tool:not([data-ready])[data-tool-id='http'] {
+    min-height: 672px;
   }
   .tool:not([data-ready])[data-tool-id='json'] {
     min-height: 438px;
@@ -173,6 +191,9 @@
   .tool:not([data-ready])[data-tool-id='cron'] {
     min-height: 952px;
   }
+  .tool:not([data-ready])[data-tool-id='csp'] {
+    min-height: 503px;
+  }
   .tool:not([data-ready])[data-tool-id='csv'] {
     min-height: 521px;
   }
@@ -187,6 +208,12 @@
   }
   .tool:not([data-ready])[data-tool-id='hash'] {
     min-height: 566px;
+  }
+  .tool:not([data-ready])[data-tool-id='headers'] {
+    min-height: 773px;
+  }
+  .tool:not([data-ready])[data-tool-id='http'] {
+    min-height: 672px;
   }
   .tool:not([data-ready])[data-tool-id='json'] {
     min-height: 664px;
@@ -250,6 +277,9 @@
   .tool:not([data-ready])[data-tool-id='cron'] {
     min-height: 1028px;
   }
+  .tool:not([data-ready])[data-tool-id='csp'] {
+    min-height: 529px;
+  }
   .tool:not([data-ready])[data-tool-id='csv'] {
     min-height: 565px;
   }
@@ -264,6 +294,12 @@
   }
   .tool:not([data-ready])[data-tool-id='hash'] {
     min-height: 692px;
+  }
+  .tool:not([data-ready])[data-tool-id='headers'] {
+    min-height: 798px;
+  }
+  .tool:not([data-ready])[data-tool-id='http'] {
+    min-height: 727px;
   }
   .tool:not([data-ready])[data-tool-id='json'] {
     min-height: 708px;
