@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { t } from '../i18n';
+import { tools } from './registry';
 import { searchTools } from './search';
 import type { ToolMeta } from './types';
 
@@ -8,7 +9,7 @@ const ids = (q: string, locale: 'es' | 'en' = 'es') => searchTools(q, locale, ca
 
 describe('searchTools', () => {
   it('sin consulta devuelve todas en orden de catálogo', () => {
-    expect(ids('')).toHaveLength(16);
+    expect(ids('')).toHaveLength(tools.length);
     expect(ids('')[0]).toBe('json');
   });
 
@@ -23,7 +24,8 @@ describe('searchTools', () => {
   });
 
   it('busca por nombre de categoría', () => {
-    expect(ids('generadores')).toEqual(['uuid', 'hash', 'password']);
+    expect(ids('generadores')).toEqual(['uuid', 'hash', 'password', 'keypair']);
+    expect(ids('red')).toEqual(expect.arrayContaining(['cidr', 'x509']));
   });
 
   it('exige todas las palabras', () => {

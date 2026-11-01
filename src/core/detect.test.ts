@@ -41,6 +41,15 @@ describe('detección: variantes', () => {
     ['binario', '0b1011', 'base'],
     ['octal', '0o755', 'base'],
     ['http sin TLS', 'http://localhost:4321/es/', 'url'],
+    ['IPv4', '192.168.1.10', 'cidr'],
+    ['bloque CIDR', '10.0.0.0/8', 'cidr'],
+    ['IPv6', '2001:db8::1', 'cidr'],
+    ['certificado PEM', '-----BEGIN CERTIFICATE-----\nMIIB\n-----END CERTIFICATE-----', 'x509'],
+    [
+      'CSR PEM',
+      '-----BEGIN CERTIFICATE REQUEST-----\nMIIB\n-----END CERTIFICATE REQUEST-----',
+      'x509',
+    ],
   ])('%s', (_, input, tool) => {
     expect(top(input)?.tool).toBe(tool);
   });

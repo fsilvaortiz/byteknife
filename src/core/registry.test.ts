@@ -1,11 +1,16 @@
+import { existsSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { locales } from '../i18n';
 import { toolById, toolModulePaths, tools, toolsIn } from './registry';
 import { categories } from './types';
 
 describe('registro de herramientas', () => {
-  it('descubre las 16 herramientas del MVP', () => {
-    expect(tools).toHaveLength(16);
+  it('descubre todas las carpetas de src/tools con meta.ts', () => {
+    const dir = join(import.meta.dirname, '..', 'tools');
+    const folders = readdirSync(dir).filter((id) => existsSync(join(dir, id, 'meta.ts')));
+    expect(tools.map((t) => t.id).sort()).toEqual(folders.sort());
+    expect(tools.length).toBeGreaterThanOrEqual(16);
   });
 
   it('cada id es único y coincide con su carpeta', () => {

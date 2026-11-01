@@ -593,6 +593,9 @@ pre.out.wrapy {
   overflow-wrap: anywhere;
   font-variant-numeric: tabular-nums;
 }
+.kv .v .pre {
+  white-space: pre-line;
+}
 .kv .c {
   padding: 6px 8px;
   display: flex;
