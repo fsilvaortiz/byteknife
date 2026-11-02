@@ -1,6 +1,6 @@
 import type { Locale } from '../i18n';
 
-export const categories = ['data', 'encoding', 'generators', 'time', 'text', 'web'] as const;
+export const categories = ['data', 'encoding', 'generators', 'time', 'text', 'web', 'net'] as const;
 export type Category = (typeof categories)[number];
 
 export interface ToolText {

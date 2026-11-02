@@ -1,3 +1,5 @@
+export { detectJson } from './detect';
+
 export type JsonMode = 'fmt' | 'min' | 'sort';
 export type Indent = 2 | 4 | '\t';
 
@@ -83,15 +85,4 @@ export function formatJson(src: string, mode: JsonMode, indent: Indent = 2): For
     depth: depth(value),
     bytes: new TextEncoder().encode(output).length,
   };
-}
-
-/** Detección: empieza como objeto o arreglo; distingue válido de inválido. */
-export function detectJson(input: string): 'valid' | 'invalid' | null {
-  if (!/^[[{]/.test(input)) return null;
-  try {
-    JSON.parse(input);
-    return 'valid';
-  } catch {
-    return 'invalid';
-  }
 }

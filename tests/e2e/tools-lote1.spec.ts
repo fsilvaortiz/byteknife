@@ -87,7 +87,7 @@ test.describe('JWT', () => {
     await open(page, '/es/jwt/');
     await expect(page.locator('.pill.ok', { hasText: 'Firma válida' })).toBeVisible();
     await expect(result(page, 'Payload')).toContainText('"name": "Ada Lovelace"');
-    await expect(page.getByText('Expira (exp)')).toBeVisible();
+    await expect(page.locator('#toolRoot').getByText('Expira (exp)')).toBeVisible();
 
     await page.getByLabel('Secreto HMAC').fill('otro-secreto');
     await expect(page.locator('.pill.bad', { hasText: 'Firma no coincide' })).toBeVisible();

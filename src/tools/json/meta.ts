@@ -1,5 +1,5 @@
 import type { ToolMeta } from '../../core/types';
-import { detectJson } from './logic';
+import { detectJson } from './detect';
 
 export const meta: ToolMeta = {
   id: 'json',

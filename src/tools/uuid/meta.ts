@@ -1,5 +1,5 @@
 import type { ToolMeta } from '../../core/types';
-import { isUuid } from './logic';
+import { isUuid } from './detect';
 
 export const meta: ToolMeta = {
   id: 'uuid',

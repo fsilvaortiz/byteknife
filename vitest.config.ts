@@ -7,7 +7,7 @@ export default getViteConfig({
     passWithNoTests: true,
     coverage: {
       provider: 'v8',
-      include: ['src/tools/*/logic.ts'],
+      include: ['src/tools/*/logic.ts', 'src/tools/*/detect.ts'],
       thresholds: { lines: 90, functions: 90, branches: 90, statements: 90 },
     },
   },

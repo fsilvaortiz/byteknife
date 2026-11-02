@@ -1,14 +1,16 @@
-import es from './es.json';
-import en from './en.json';
-import pt from './pt.json';
+import { messages, type Messages } from '#i18n/messages';
+import type { Locale } from './locales';
 
-export const locales = ['es', 'en', 'pt'] as const;
-export type Locale = (typeof locales)[number];
-export const defaultLocale: Locale = 'es';
+export { defaultLocale, isLocale, locales, type Locale } from './locales';
 
-export type MessageKey = keyof typeof es;
+export type MessageKey = keyof Messages;
 
-export const messages: Record<Locale, Record<MessageKey, string>> = { es, en, pt };
+/** Claves con formas de plural: existe `<clave>.other` y, opcionalmente, `.one`, `.many`… */
+export type PluralKey = {
+  [K in MessageKey]: K extends `${infer B}.other` ? B : never;
+}[MessageKey];
+
+export { messages };
 
 export function t(
   locale: Locale,
@@ -20,6 +22,14 @@ export function t(
   );
 }
 
-export function isLocale(value: unknown): value is Locale {
-  return (locales as readonly unknown[]).includes(value);
+/** Como t(), pero elige la forma de plural de `count` según el idioma (Intl.PluralRules). */
+export function tn(
+  locale: Locale,
+  key: PluralKey,
+  count: number,
+  params: Record<string, string | number> = {},
+): string {
+  const form = `${key}.${new Intl.PluralRules(locale).select(count)}`;
+  const k = (form in messages[locale] ? form : `${key}.other`) as MessageKey;
+  return t(locale, k, { count, ...params });
 }

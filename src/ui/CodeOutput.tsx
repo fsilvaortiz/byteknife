@@ -8,8 +8,16 @@ const CLASS: Record<TokenType, string | undefined> = {
   plain: undefined,
 };
 
+export interface Segment {
+  text: string;
+  /** Resalta con <mark>; 1 usa el tono alternativo para separar coincidencias pegadas. */
+  mark?: 0 | 1;
+}
+
 interface Props {
   text: string;
+  /** En lugar de `text`: tramos con resaltado opcional. */
+  segments?: Segment[];
   /** Ajusta líneas largas en vez de desplazar en horizontal. */
   wrap?: boolean;
   highlight?: 'json';
@@ -18,7 +26,15 @@ interface Props {
   testId?: string;
 }
 
-export default function CodeOutput({ text, wrap, highlight, label, style, testId }: Props) {
+export default function CodeOutput({
+  text,
+  segments,
+  wrap,
+  highlight,
+  label,
+  style,
+  testId,
+}: Props) {
   return (
     <pre
       class={wrap ? 'out wrapy' : 'out'}
@@ -28,17 +44,27 @@ export default function CodeOutput({ text, wrap, highlight, label, style, testId
       tabIndex={0}
       data-testid={testId}
     >
-      {highlight === 'json'
-        ? tokenizeJson(text).map((tk, i) =>
-            tk.type === 'plain' ? (
-              tk.text
+      {segments
+        ? segments.map((sg, i) =>
+            sg.mark === undefined ? (
+              sg.text
             ) : (
-              <span key={i} class={CLASS[tk.type]}>
-                {tk.text}
-              </span>
+              <mark key={i} class={sg.mark ? 'alt' : undefined}>
+                {sg.text}
+              </mark>
             ),
           )
-        : text}
+        : highlight === 'json'
+          ? tokenizeJson(text).map((tk, i) =>
+              tk.type === 'plain' ? (
+                tk.text
+              ) : (
+                <span key={i} class={CLASS[tk.type]}>
+                  {tk.text}
+                </span>
+              ),
+            )
+          : text}
     </pre>
   );
 }

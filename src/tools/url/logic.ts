@@ -1,3 +1,5 @@
+export { isHttpUrl } from './detect';
+
 export type UrlMode = 'dec' | 'enc' | 'encu';
 
 /** Secuencia % mal formada: la interfaz arma el mensaje en el idioma del usuario. */
@@ -54,5 +56,3 @@ export function parseUrl(input: string): UrlParts | null {
     params: [...u.searchParams],
   };
 }
-
-export const isHttpUrl = (s: string) => /^https?:\/\/\S+$/i.test(s);

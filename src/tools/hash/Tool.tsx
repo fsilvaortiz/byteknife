@@ -98,7 +98,7 @@ export default function HashTool({ locale, initialInput }: ToolProps) {
           <input type="file" class="visually-hidden" onChange={onFile} />
         </label>
         <span class="stat" data-testid="hash-source">
-          {busy ? t(locale, 'hash.working') : source}
+          {busy ? t(locale, 'hash.working') : source || '…'}
         </span>
         {failed && <Pill tone="bad">{t(locale, 'hash.failed')}</Pill>}
       </div>

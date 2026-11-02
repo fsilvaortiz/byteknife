@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'preact/hooks';
 import type { ToolProps } from '../../components/ToolHost';
-import { t, type Locale } from '../../i18n';
+import { t, tn, type Locale } from '../../i18n';
 import CodeOutput from '../../ui/CodeOutput';
 import CopyButton from '../../ui/CopyButton';
 import { fmtBytes, utf8Bytes } from '../../ui/format';
@@ -32,7 +32,10 @@ function run(locale: Locale, src: string, dir: Dir, urlSafe: boolean): Output {
   try {
     const d = decodeBase64(src);
     return d.kind === 'text'
-      ? { text: d.text, stat: t(locale, 'b64.textStat', { bytes: d.bytes }) }
+      ? {
+          text: d.text,
+          stat: t(locale, 'b64.textStat', { bytes: tn(locale, 'unit.byte', d.bytes) }),
+        }
       : {
           text: d.hex + (d.truncated ? '\n…' : ''),
           stat: t(locale, 'b64.binStat', { size: fmtBytes(d.bytes) }),

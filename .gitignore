@@ -9,3 +9,5 @@ test-results/
 
 # Symlink al CLAUDE.md del repo interno (directorio hermano)
 CLAUDE.md
+lighthouse-report/
+.lighthouseci/

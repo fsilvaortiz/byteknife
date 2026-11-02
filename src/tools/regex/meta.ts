@@ -41,4 +41,5 @@ export const meta: ToolMeta = {
       ],
     },
   },
+  heavy: true,
 };

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import type { ToolProps } from '../../components/ToolHost';
 import { relativeTime } from '../../core/relative';
 import { t } from '../../i18n';
@@ -14,12 +14,20 @@ export default function UuidTool({ locale, initialInput }: ToolProps) {
   const [count, setCount] = useState(8);
   const [upper, setUpper] = useState(false);
   const [noHyphens, setNoHyphens] = useState(false);
-  const [ids, setIds] = useState<string[]>([]);
+  // La primera tanda se genera al montar, no en un efecto: así la lista no aparece un
+  // cuadro después y el inspector de abajo no salta.
+  const [ids, setIds] = useState(() =>
+    generateUuids(8, { version: 'v4', upper: false, noHyphens: false }),
+  );
   const [probe, setProbe] = useState(() => initialInput ?? uuidV7(Date.now()).uuid);
 
   const generate = () => setIds(generateUuids(count, { version, upper, noHyphens }));
   // Cambiar versión u opciones regenera, como en el prototipo; la cantidad espera a «Generar».
-  useEffect(generate, [version, upper, noHyphens]);
+  const first = useRef(true);
+  useEffect(() => {
+    if (first.current) first.current = false;
+    else generate();
+  }, [version, upper, noHyphens]);
 
   const info = useMemo(() => (probe.trim() ? inspectUuid(probe) : undefined), [probe]);
   const rows: KVRow[] = [];
