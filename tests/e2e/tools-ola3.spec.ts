@@ -126,3 +126,34 @@ test('Validar JSON Schema: errores y documento válido', async ({ page }) => {
     .fill('{"id": 42, "email": "ana@ejemplo.dev", "plan": "pro"}');
   await expect(page.locator('.pill.ok')).toHaveText('El documento cumple el esquema');
 });
+
+test('Validar OpenAPI: problemas con línea, operaciones y spec válida', async ({ page }) => {
+  await open(page, '/es/openapi/');
+  await expect(page.locator('.pill.bad').first()).toHaveText('4 errores');
+  const problems = region(page, 'Problemas');
+  await expect(problems).toContainText(
+    'La ruta usa {pedidoId}, pero ningún parámetro in: path lo declara',
+  );
+  await expect(problems).toContainText('Propiedad no permitida aquí: «descripton»');
+  await expect(problems).toContainText('La referencia #/components/schemas/Cliente no existe');
+  await expect(page.locator('.kv')).toContainText('OpenAPI 3.1.0');
+  await expect(region(page, 'Operaciones')).toContainText('crearPedido');
+
+  const input = page.getByLabel('Especificación OpenAPI (YAML o JSON)');
+  await input.fill(
+    '{"swagger": "2.0", "info": {"title": "T", "version": "1"}, "paths": {"/a": {"get": {"responses": {"200": {"description": "ok"}}}}}}',
+  );
+  await expect(page.locator('.pill.ok')).toHaveText('Sin problemas');
+  await expect(page.locator('.kv')).toContainText('Swagger 2.0');
+
+  await input.fill('nombre: x');
+  await expect(page.getByRole('alert')).toContainText('No se reconoce la versión');
+});
+
+test('Validar OpenAPI: abre con la spec pegada en el home', async ({ page }) => {
+  await open(page, '/es/');
+  await page.getByLabel('Pega cualquier cosa').fill('openapi: 3.0.3\ninfo: {title: x}\npaths: {}');
+  await page.getByLabel('Pega cualquier cosa').press('Enter');
+  await expect(page).toHaveURL(/\/es\/openapi\/$/);
+  await expect(region(page, 'Problemas')).toContainText('Falta la propiedad obligatoria «version»');
+});
