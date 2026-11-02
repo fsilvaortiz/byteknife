@@ -74,6 +74,9 @@
 .tool:not([data-ready])[data-tool-id='markdown'] {
   min-height: 425px;
 }
+.tool:not([data-ready])[data-tool-id='openapi'] {
+  min-height: 786px;
+}
 .tool:not([data-ready])[data-tool-id='password'] {
   min-height: 311px;
 }
@@ -182,6 +185,9 @@
   }
   .tool:not([data-ready])[data-tool-id='markdown'] {
     min-height: 425px;
+  }
+  .tool:not([data-ready])[data-tool-id='openapi'] {
+    min-height: 786px;
   }
   .tool:not([data-ready])[data-tool-id='password'] {
     min-height: 311px;
@@ -293,6 +299,9 @@
   .tool:not([data-ready])[data-tool-id='markdown'] {
     min-height: 831px;
   }
+  .tool:not([data-ready])[data-tool-id='openapi'] {
+    min-height: 872px;
+  }
   .tool:not([data-ready])[data-tool-id='password'] {
     min-height: 345px;
   }
@@ -402,6 +411,9 @@
   }
   .tool:not([data-ready])[data-tool-id='markdown'] {
     min-height: 831px;
+  }
+  .tool:not([data-ready])[data-tool-id='openapi'] {
+    min-height: 872px;
   }
   .tool:not([data-ready])[data-tool-id='password'] {
     min-height: 376px;
