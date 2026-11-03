@@ -798,5 +798,6 @@
   "oapi.s.pathParamExtra": "O parâmetro in: path «{name}» não aparece na rota",
   "oapi.s.dupOperationId": "operationId «{id}» repetido: já usado por {other}",
   "oapi.s.securityMissing": "O esquema de segurança «{name}» não está definido",
-  "oapi.s.unusedSchema": "O esquema «{name}» não é usado em nenhum $ref"
+  "oapi.s.unusedSchema": "O esquema «{name}» não é usado em nenhum $ref",
+  "curl.insecureSpring": "O comando usa -k, mas o código não desativa a verificação TLS: no Spring Boot isso se configura no ClientHttpRequestFactory ou no HttpClient subjacente. Evite fora de desenvolvimento."
 }

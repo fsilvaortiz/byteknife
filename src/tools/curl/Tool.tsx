@@ -18,6 +18,8 @@ const TARGETS: [Target, string][] = [
   ['fetch', 'JavaScript fetch'],
   ['python', 'Python requests'],
   ['java', 'Java HttpClient'],
+  ['restclient', 'Spring RestClient'],
+  ['webclient', 'Spring WebClient'],
   ['go', 'Go net/http'],
 ];
 
@@ -45,6 +47,7 @@ export default function CurlTool({ locale, initialInput }: ToolProps) {
 
   const req = parsed instanceof CurlError ? null : parsed;
   const out = req ? generate(req, target) : '';
+  const spring = target === 'restclient' || target === 'webclient';
 
   return (
     <>
@@ -81,7 +84,9 @@ export default function CurlTool({ locale, initialInput }: ToolProps) {
       {req?.body?.kind === 'multipart' && target === 'java' && (
         <p class="note">{t(locale, 'curl.multipartJava')}</p>
       )}
-      {req?.insecure && target !== 'fetch' && <p class="note">{t(locale, 'curl.insecure')}</p>}
+      {req?.insecure && target !== 'fetch' && (
+        <p class="note">{t(locale, spring ? 'curl.insecureSpring' : 'curl.insecure')}</p>
+      )}
     </>
   );
 }

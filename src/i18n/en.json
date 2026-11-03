@@ -798,5 +798,6 @@
   "oapi.s.pathParamExtra": "The in: path parameter “{name}” is not in the path",
   "oapi.s.dupOperationId": "Duplicate operationId “{id}”: already used by {other}",
   "oapi.s.securityMissing": "Security scheme “{name}” is not defined",
-  "oapi.s.unusedSchema": "Schema “{name}” is not used by any $ref"
+  "oapi.s.unusedSchema": "Schema “{name}” is not used by any $ref",
+  "curl.insecureSpring": "The command uses -k, but the code does not disable TLS verification: in Spring Boot that is configured on the underlying ClientHttpRequestFactory or HttpClient. Avoid it outside development."
 }

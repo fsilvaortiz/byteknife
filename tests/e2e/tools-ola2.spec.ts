@@ -172,6 +172,10 @@ test.describe('curl → código', () => {
     await expect(out).toContainText('http.NewRequest("POST"');
     await page.getByRole('button', { name: 'Java HttpClient' }).click();
     await expect(out).toContainText('HttpRequest.newBuilder()');
+    await page.getByRole('button', { name: 'Spring RestClient' }).click();
+    await expect(out).toContainText('RestClient client = RestClient.create();');
+    await page.getByRole('button', { name: 'Spring WebClient' }).click();
+    await expect(out).toContainText('.block();');
 
     await page.getByLabel('Comando curl').fill("curl 'https://x.dev");
     await expect(page.locator('.pill.bad')).toHaveText('Hay una comilla sin cerrar');
