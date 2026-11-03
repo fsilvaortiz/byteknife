@@ -207,6 +207,53 @@ print(res.status_code, res.text)
     expect(out).toContain('.method("POST", HttpRequest.BodyPublishers.ofString("{\\"sku\\":');
   });
 
+  it('spring restclient y webclient', () => {
+    const rest = generate(post, 'restclient');
+    expect(rest).toContain('RestClient client = RestClient.create();');
+    expect(rest).toContain('    .post()\n');
+    expect(rest).toContain('.headers(h -> h.setBasicAuth(');
+    expect(rest).toContain('    .body("""\n        {\n');
+    expect(rest).toContain('    .toEntity(String.class);\n');
+    const web = generate(post, 'webclient');
+    expect(web).toContain('import org.springframework.web.reactive.function.client.WebClient;');
+    expect(web).toContain('    .bodyValue("""\n');
+    expect(web).toContain('    .toEntity(String.class)\n    .block();\n');
+  });
+
+  it('spring: el text block duplica las barras del JSON', () => {
+    const r = parseCurl(`curl --json '{"a": "x\\\\y"}' https://x.dev`);
+    expect(generate(r, 'restclient')).toContain('"a": "x\\\\\\\\y"');
+  });
+
+  it('spring: formularios, multipart, métodos y cuerpos crudos', () => {
+    const form = parseCurl('curl -d a=1 https://x.dev');
+    expect(generate(form, 'restclient')).toContain(
+      '.contentType(MediaType.APPLICATION_FORM_URLENCODED)\n    .body(form)',
+    );
+    expect(generate(form, 'webclient')).toContain('.body(BodyInserters.fromFormData(form))');
+    const typed = parseCurl(
+      "curl -H 'Content-Type: application/x-www-form-urlencoded' -d a=1 https://x.dev",
+    );
+    expect(generate(typed, 'restclient')).not.toContain('.contentType(');
+    const multi = parseCurl('curl -F f=@a.png -F n=1 https://x.dev');
+    const rest = generate(multi, 'restclient');
+    expect(rest).toContain('parts.part("f", new FileSystemResource("a.png"));');
+    expect(rest).toContain('parts.part("n", "1");');
+    expect(rest).toContain('.contentType(MediaType.MULTIPART_FORM_DATA)');
+    expect(generate(multi, 'webclient')).toContain(
+      '.body(BodyInserters.fromMultipartData(parts.build()))',
+    );
+    expect(generate(parseCurl('curl -X PURGE https://x.dev'), 'webclient')).toContain(
+      '.method(HttpMethod.valueOf("PURGE"))',
+    );
+    const getBody = parseCurl("curl -X GET -H 'Content-Type: text/plain' -d hola https://x.dev");
+    expect(generate(getBody, 'restclient')).toContain('.method(HttpMethod.GET)');
+    expect(generate(getBody, 'restclient')).toContain('.body("hola")');
+    expect(generate(parseCurl('curl https://x.dev'), 'restclient')).toContain('    .get()\n');
+    const badJson = parseCurl(`curl --json '{x' https://x.dev`);
+    expect(generate(badJson, 'webclient')).toContain('.bodyValue("{x")');
+  });
+
   it('go', () => {
     const out = generate(parseCurl('curl -k -d a=1 https://x.dev'), 'go');
     expect(out).toContain('"crypto/tls"');

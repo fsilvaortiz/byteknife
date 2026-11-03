@@ -142,7 +142,7 @@
     min-height: 365px;
   }
   .tool:not([data-ready])[data-tool-id='curl'] {
-    min-height: 463px;
+    min-height: 497px;
   }
   .tool:not([data-ready])[data-tool-id='diff'] {
     min-height: 510px;
@@ -255,7 +255,7 @@
     min-height: 505px;
   }
   .tool:not([data-ready])[data-tool-id='curl'] {
-    min-height: 689px;
+    min-height: 723px;
   }
   .tool:not([data-ready])[data-tool-id='diff'] {
     min-height: 756px;

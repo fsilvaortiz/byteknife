@@ -9,7 +9,7 @@ export const meta: ToolMeta = {
     es: {
       name: 'curl → código',
       description:
-        'Convierte un comando curl en código con fetch de JavaScript, requests de Python, HttpClient de Java o net/http de Go.',
+        'Convierte un comando curl en código con fetch de JavaScript, requests de Python, HttpClient de Java, RestClient o WebClient de Spring, o net/http de Go.',
       keywords: [
         'curl',
         'convertir',
@@ -18,6 +18,9 @@ export const meta: ToolMeta = {
         'requests',
         'java',
         'httpclient',
+        'spring',
+        'webclient',
+        'restclient',
         'go',
         'http',
         'api',
@@ -27,7 +30,7 @@ export const meta: ToolMeta = {
     en: {
       name: 'curl → code',
       description:
-        'Turn a curl command into JavaScript fetch, Python requests, Java HttpClient or Go net/http code.',
+        'Turn a curl command into JavaScript fetch, Python requests, Java HttpClient, Spring RestClient or WebClient, or Go net/http code.',
       keywords: [
         'curl',
         'convert',
@@ -36,6 +39,9 @@ export const meta: ToolMeta = {
         'requests',
         'java',
         'httpclient',
+        'spring',
+        'webclient',
+        'restclient',
         'go',
         'http',
         'api',
@@ -45,7 +51,7 @@ export const meta: ToolMeta = {
     pt: {
       name: 'curl → código',
       description:
-        'Converte um comando curl em código com fetch do JavaScript, requests do Python, HttpClient do Java ou net/http do Go.',
+        'Converte um comando curl em código com fetch do JavaScript, requests do Python, HttpClient do Java, RestClient ou WebClient do Spring, ou net/http do Go.',
       keywords: [
         'curl',
         'converter',
@@ -54,6 +60,9 @@ export const meta: ToolMeta = {
         'requests',
         'java',
         'httpclient',
+        'spring',
+        'webclient',
+        'restclient',
         'go',
         'http',
         'api',

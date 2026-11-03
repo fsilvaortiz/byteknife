@@ -307,7 +307,7 @@ export function parseCurl(input: string): Request {
   return req;
 }
 
-export type Target = 'fetch' | 'python' | 'java' | 'go';
+export type Target = 'fetch' | 'python' | 'java' | 'restclient' | 'webclient' | 'go';
 
 const js = (s: string) => JSON.stringify(s);
 const py = (s: string) => JSON.stringify(s);
@@ -445,6 +445,111 @@ function toJava(r: Request): string {
   return lines.join('\n') + '\n';
 }
 
+/** Texto como text block de Java (""" … """), con las barras y las triples comillas escapadas. */
+function javaTextBlock(text: string, pad: string): string {
+  const body = text.replace(/\\/g, '\\\\').replace(/"""/g, '\\"""');
+  return `"""\n${body.replace(/^/gm, pad)}\n${pad}"""`;
+}
+
+const SPRING_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
+
+/**
+ * Spring: RestClient (síncrono, Spring Framework 6.1+) o WebClient (reactivo, con block()).
+ * Comparten la forma de la cadena; cambian el cuerpo, el final y algunos imports.
+ */
+function toSpring(r: Request, flavor: 'restclient' | 'webclient'): string {
+  const web = flavor === 'webclient';
+  const imports = new Set(['org.springframework.http.ResponseEntity']);
+  imports.add(
+    web
+      ? 'org.springframework.web.reactive.function.client.WebClient'
+      : 'org.springframework.web.client.RestClient',
+  );
+  const pre: string[] = [];
+  const chain: string[] = [];
+  // get(), delete()… no aceptan cuerpo: con cuerpo solo sirven post(), put() y patch().
+  const short = SPRING_METHODS.includes(r.method) && (!r.body || /^P(OST|UT|ATCH)$/.test(r.method));
+  if (short) chain.push(`.${r.method.toLowerCase()}()`);
+  else {
+    imports.add('org.springframework.http.HttpMethod');
+    chain.push(
+      SPRING_METHODS.includes(r.method)
+        ? `.method(HttpMethod.${r.method})`
+        : `.method(HttpMethod.valueOf(${javaString(r.method)}))`,
+    );
+  }
+  chain.push(`.uri(${javaString(r.url)})`);
+  for (const [k, v] of r.headers) chain.push(`.header(${javaString(k)}, ${javaString(v)})`);
+  if (r.auth) {
+    chain.push(
+      `.headers(h -> h.setBasicAuth(${javaString(r.auth.user)}, ${javaString(r.auth.password)}))`,
+    );
+  }
+  const typed = (type: string) => {
+    if (hasHeader(r.headers, 'Content-Type')) return;
+    imports.add('org.springframework.http.MediaType');
+    chain.push(`.contentType(MediaType.${type})`);
+  };
+  const body = r.body;
+  if (body?.kind === 'urlencoded') {
+    imports.add('org.springframework.util.LinkedMultiValueMap');
+    imports.add('org.springframework.util.MultiValueMap');
+    pre.push('MultiValueMap<String, String> form = new LinkedMultiValueMap<>();');
+    for (const [k, v] of body.pairs) pre.push(`form.add(${javaString(k)}, ${javaString(v)});`);
+    if (web) {
+      imports.add('org.springframework.web.reactive.function.BodyInserters');
+      chain.push('.body(BodyInserters.fromFormData(form))');
+    } else {
+      typed('APPLICATION_FORM_URLENCODED');
+      chain.push('.body(form)');
+    }
+  } else if (body?.kind === 'multipart') {
+    imports.add('org.springframework.http.client.MultipartBodyBuilder');
+    pre.push('MultipartBodyBuilder parts = new MultipartBodyBuilder();');
+    for (const f of body.fields) {
+      if (f.file) imports.add('org.springframework.core.io.FileSystemResource');
+      pre.push(
+        `parts.part(${javaString(f.name)}, ${f.file ? `new FileSystemResource(${javaString(f.value)})` : javaString(f.value)});`,
+      );
+    }
+    if (web) {
+      imports.add('org.springframework.web.reactive.function.BodyInserters');
+      chain.push('.body(BodyInserters.fromMultipartData(parts.build()))');
+    } else {
+      typed('MULTIPART_FORM_DATA');
+      chain.push('.body(parts.build())');
+    }
+  } else if (body) {
+    let text = javaString(body.text);
+    if (body.kind === 'json') {
+      try {
+        text = javaTextBlock(JSON.stringify(JSON.parse(body.text), null, 2), '        ');
+      } catch {
+        // JSON inválido: va tal cual, como texto.
+      }
+    }
+    chain.push(`${web ? '.bodyValue' : '.body'}(${text})`);
+  }
+  chain.push('.retrieve()');
+  chain.push('.toEntity(String.class)');
+  if (web) chain.push('.block();');
+  else chain[chain.length - 1] += ';';
+
+  const client = web
+    ? 'WebClient client = WebClient.create();'
+    : 'RestClient client = RestClient.create();';
+  const lines = [
+    ...[...imports].sort().map((i) => `import ${i};`),
+    '',
+    client,
+    ...(pre.length ? ['', ...pre, ''] : []),
+    'ResponseEntity<String> res = client',
+    ...chain.map((c) => `    ${c}`),
+    'System.out.println(res.getStatusCode() + " " + res.getBody());',
+  ];
+  return lines.join('\n') + '\n';
+}
+
 function toGo(r: Request): string {
   const imports = ['"fmt"', '"io"', '"net/http"'];
   let body = 'nil';
@@ -500,6 +605,9 @@ export function generate(r: Request, target: Target): string {
       return toPython(r);
     case 'java':
       return toJava(r);
+    case 'restclient':
+    case 'webclient':
+      return toSpring(r, target);
     default:
       return toGo(r);
   }

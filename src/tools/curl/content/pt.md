@@ -1,6 +1,6 @@
 ---
-title: 'Converter curl para fetch, Python, Java e Go'
-description: 'Cole um comando curl e receba o código equivalente com fetch do JavaScript, requests do Python, HttpClient do Java ou net/http do Go.'
+title: 'Converter curl para fetch, Python, Java, Spring e Go'
+description: 'Cole um comando curl e receba o código com fetch, requests do Python, HttpClient do Java, RestClient ou WebClient do Spring, ou net/http do Go.'
 examples:
   - title: 'GET com token para fetch'
     input: |
@@ -38,11 +38,13 @@ faq:
     a: 'Sim. «Copiar como cURL» das ferramentas de desenvolvedor do Chrome ou do Firefox gera comandos com aspas simples, $''…'' e linhas terminadas em \, e todos são lidos como o bash leria.'
   - q: 'A requisição é executada?'
     a: 'Não. A ferramenta só lê o comando e escreve código; ela não faz nenhuma chamada de rede. Tokens e senhas que você colar não saem do navegador.'
+  - q: 'RestClient ou WebClient?'
+    a: 'RestClient é o cliente síncrono do Spring Framework 6.1 (Spring Boot 3.2+) e substitui o RestTemplate em código novo. WebClient é o cliente reativo do WebFlux; o código termina com block() para servir de exemplo direto, mas numa app reativa você devolve o Mono sem bloquear. No Spring Boot, prefira criá-los a partir do RestClient.Builder ou WebClient.Builder que o framework injeta.'
 ---
 
 Copiar um comando `curl` da documentação de uma API, de um ticket ou do «Copiar como cURL» do navegador é o jeito mais rápido de reproduzir uma requisição. Passá-lo para código à mão, porém, é tedioso. Esta ferramenta o **converte** para a linguagem que você usa.
 
-Escolha o destino: **fetch** do JavaScript (navegador ou Node.js), **requests** do Python, **HttpClient** do Java 11+ ou **net/http** do Go. Método, URL, cabeçalhos, corpo e as opções mais comuns são respeitados: `-d` vira um formulário urlencoded, `--json` ou um `Content-Type: application/json` vira um corpo JSON legível, `-F` monta um formulário multipart, `-u` adiciona autenticação básica, `-G` passa os dados para a URL e `-L` faz o cliente seguir redirecionamentos.
+Escolha o destino: **fetch** do JavaScript (navegador ou Node.js), **requests** do Python, **HttpClient** do Java 11+, **RestClient** (Spring Framework 6.1+, Spring Boot 3.2+) ou **WebClient** (WebFlux) do Spring, ou **net/http** do Go. Método, URL, cabeçalhos, corpo e as opções mais comuns são respeitados: `-d` vira um formulário urlencoded, `--json` ou um `Content-Type: application/json` vira um corpo JSON legível, `-F` monta um formulário multipart, `-u` adiciona autenticação básica, `-G` passa os dados para a URL e `-L` faz o cliente seguir redirecionamentos.
 
 O interpretador entende a sintaxe do shell: aspas simples e duplas, `$'…'`, escapes e linhas quebradas com `\`. Se faltar uma aspa ou a URL, você vê o erro.
 

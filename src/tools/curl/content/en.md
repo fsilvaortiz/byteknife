@@ -1,6 +1,6 @@
 ---
-title: 'Convert curl to fetch, Python, Java and Go'
-description: 'Paste a curl command and get the equivalent code with JavaScript fetch, Python requests, Java HttpClient or Go net/http.'
+title: 'Convert curl to fetch, Python, Java, Spring and Go'
+description: 'Paste a curl command and get the equivalent code with JavaScript fetch, Python requests, Java HttpClient, Spring RestClient or WebClient, or Go net/http.'
 examples:
   - title: 'GET with a token to fetch'
     input: |
@@ -38,11 +38,13 @@ faq:
     a: 'Yes. "Copy as cURL" in Chrome or Firefox dev tools produces commands with single quotes, $''…'' and lines ending in \, and they are all read the way bash would.'
   - q: 'Is the request executed?'
     a: 'No. The tool only reads the command and writes code; it makes no network calls. Tokens and passwords you paste never leave your browser.'
+  - q: 'RestClient or WebClient?'
+    a: 'RestClient is the synchronous client from Spring Framework 6.1 (Spring Boot 3.2+) and replaces RestTemplate in new code. WebClient is the reactive WebFlux client; the code ends with block() so it works as a direct example, but in a reactive app you return the Mono without blocking. In Spring Boot, build them from the RestClient.Builder or WebClient.Builder the framework injects.'
 ---
 
 Copying a `curl` command from API docs, a ticket or the browser's "Copy as cURL" is the quickest way to reproduce a request. Turning it into code by hand, though, is tedious. This tool **converts** it into the language you use.
 
-Pick the target: JavaScript **fetch** (browser or Node.js), Python **requests**, Java 11+ **HttpClient** or Go **net/http**. Method, URL, headers, body and the common options are kept: `-d` becomes a urlencoded form, `--json` or a `Content-Type: application/json` header becomes a readable JSON body, `-F` builds a multipart form, `-u` adds basic auth, `-G` moves the data into the URL and `-L` makes the client follow redirects.
+Pick the target: JavaScript **fetch** (browser or Node.js), Python **requests**, Java 11+ **HttpClient**, Spring **RestClient** (Spring Framework 6.1+, Spring Boot 3.2+) or **WebClient** (WebFlux), or Go **net/http**. Method, URL, headers, body and the common options are kept: `-d` becomes a urlencoded form, `--json` or a `Content-Type: application/json` header becomes a readable JSON body, `-F` builds a multipart form, `-u` adds basic auth, `-G` moves the data into the URL and `-L` makes the client follow redirects.
 
 The parser understands shell syntax: single and double quotes, `$'…'`, escapes and lines split with `\`. If a quote or the URL is missing, you see the error.
 
