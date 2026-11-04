@@ -18,7 +18,7 @@ Requiere Node 24 (ver `.nvmrc`) y pnpm 10.
 
 ```sh
 pnpm install
-pnpm exec playwright install chromium   # solo la primera vez, para los e2e
+pnpm --filter @byteknife/web exec playwright install chromium   # solo la primera vez, para los e2e
 pnpm dev
 ```
 
