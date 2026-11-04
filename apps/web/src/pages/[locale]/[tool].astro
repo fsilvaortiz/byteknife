@@ -1,0 +1,125 @@
+---
+import Base from '../../layouts/Base.astro';
+import FavoriteButton from '../../components/FavoriteButton';
+import ToolHost from '../../components/ToolHost';
+import { getEntry, render } from 'astro:content';
+import { homePath, toolPath } from '@byteknife/core/core/paths';
+import { tools, toolsIn } from '@byteknife/core/core/registry';
+import { faqPageLd, softwareApplicationLd } from '../../lib/seo';
+import { categories, type ToolMeta } from '@byteknife/core/core/types';
+import { locales, t, type Locale } from '@byteknife/core/i18n';
+
+export function getStaticPaths() {
+  return locales.flatMap((locale) =>
+    tools.map((tool) => ({ params: { locale, tool: tool.id }, props: { tool } })),
+  );
+}
+
+const locale = Astro.params.locale as Locale;
+const { tool } = Astro.props as { tool: ToolMeta };
+const text = tool.i18n[locale];
+const entry = await getEntry('tools', `${tool.id}/${locale}`);
+if (!entry) throw new Error(`Falta src/tools/${tool.id}/content/${locale}.md`);
+const { Content } = await render(entry);
+const { title, description, examples, faq } = entry.data;
+const url = new URL(toolPath(locale, tool.id), Astro.site).href;
+---
+
+<Base
+  locale={locale}
+  title={t(locale, 'site.toolTitle', { name: title })}
+  description={description}
+  path={`${tool.id}/`}
+  structuredData={[
+    softwareApplicationLd({ name: text.name, url, locale, description }),
+    faqPageLd({ url, locale, faq }),
+  ]}
+>
+  <div class="wrap work">
+    <nav class="rail" aria-label={t(locale, 'tool.rail')}>
+      {categories.map((c) => (
+        <>
+          <h4>{t(locale, `cat.${c}`)}</h4>
+          {toolsIn(c).map((x) => (
+            <a href={toolPath(locale, x.id)} aria-current={x.id === tool.id ? 'page' : undefined}>
+              {x.i18n[locale].name}
+            </a>
+          ))}
+        </>
+      ))}
+    </nav>
+    <div class="work-main">
+      <div class="mob-nav">
+        <a class="btn sm" href={homePath(locale)}>
+          {t(locale, 'tool.home')}
+        </a>
+        <select id="mobSel" aria-label={t(locale, 'tool.change')} data-locale={locale}>
+          {categories.map((c) => (
+            <optgroup label={t(locale, `cat.${c}`)}>
+              {toolsIn(c).map((x) => (
+                <option value={x.id} selected={x.id === tool.id}>
+                  {x.i18n[locale].name}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+      </div>
+      <header class="tool-head">
+        <div>
+          <p class="eyebrow">{t(locale, `cat.${tool.category}`)}</p>
+          <h1>{text.name}</h1>
+          <p class="lede">{text.description}</p>
+        </div>
+        <FavoriteButton client:load locale={locale} id={tool.id} />
+      </header>
+      <div class="tool" id="toolRoot" data-tool-id={tool.id}>
+        <ToolHost client:load locale={locale} id={tool.id} />
+      </div>
+      <article class="about">
+        <section>
+          <h2>{t(locale, 'seo.about')}</h2>
+          <Content />
+        </section>
+        <section>
+          <h2>{t(locale, 'seo.examples')}</h2>
+          {examples.map((ex) => (
+            <div class="example">
+              <h3>{ex.title}</h3>
+              <div class="split">
+                <figure>
+                  <figcaption>{t(locale, 'seo.input')}</figcaption>
+                  <pre>{ex.input.trimEnd()}</pre>
+                </figure>
+                <figure>
+                  <figcaption>{t(locale, 'seo.output')}</figcaption>
+                  <pre>{ex.output.trimEnd()}</pre>
+                </figure>
+              </div>
+            </div>
+          ))}
+        </section>
+        <section>
+          <h2>{t(locale, 'seo.faq')}</h2>
+          {faq.map((f) => (
+            <div class="qa">
+              <h3>{f.q}</h3>
+              <p>{f.a}</p>
+            </div>
+          ))}
+        </section>
+      </article>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { toolPath } from '@byteknife/core/core/paths';
+  import { isLocale } from '@byteknife/core/i18n/locales';
+
+  const select = document.querySelector<HTMLSelectElement>('#mobSel');
+  select?.addEventListener('change', () => {
+    const locale = select.dataset.locale;
+    if (isLocale(locale)) window.location.assign(toolPath(locale, select.value));
+  });
+</script>

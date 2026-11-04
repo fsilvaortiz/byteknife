@@ -9,7 +9,7 @@ Cada página, al cargarse, envía con `navigator.sendBeacon` a `/api/visit` (mis
 - `p`: la ruta de la página, por ejemplo `/es/json/`.
 - `r`: el dominio desde el que se llegó, por ejemplo `news.ycombinator.com`, o vacío si fue directo o desde el mismo sitio. Nunca la URL completa.
 
-El Worker (`worker/index.ts`) valida ambos campos con `parseVisit` (`src/core/visit.ts`) y descarta todo lo que no sea una ruta del sitio o un dominio. Guarda el resultado en Workers Analytics Engine (dataset `byteknife_visits`, retención de 3 meses). No se guardan IP, user agent, cookies ni identificadores, y nada de lo que se escribe en las herramientas. El e2e `privacy.spec.ts` comprueba el cuerpo exacto que se envía.
+El Worker (`apps/web/worker/index.ts`) valida ambos campos con `parseVisit` (`apps/web/src/lib/visit.ts`) y descarta todo lo que no sea una ruta del sitio o un dominio. Guarda el resultado en Workers Analytics Engine (dataset `byteknife_visits`, retención de 3 meses). No se guardan IP, user agent, cookies ni identificadores, y nada de lo que se escribe en las herramientas. El e2e `privacy.spec.ts` comprueba el cuerpo exacto que se envía.
 
 Las vistas previas de cada PR no tienen el binding `VISITS`, así que no cuentan.
 

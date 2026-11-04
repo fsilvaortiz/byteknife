@@ -13,10 +13,20 @@ pnpm install
 pnpm dev       # servidor local
 pnpm test      # pruebas unitarias (Vitest)
 pnpm e2e       # pruebas end-to-end (Playwright)
-pnpm build     # build estático en dist/
+pnpm build     # build estático en apps/web/dist/
 pnpm size      # presupuesto de JS
 pnpm lighthouse # Lighthouse CI con los umbrales del plan
 ```
+
+### Estructura
+
+Es un workspace de pnpm. Los comandos de arriba se corren desde la raíz.
+
+| Carpeta             | Contenido                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `packages/core`     | Herramientas (`tools/<id>/`), componentes de UI, i18n y estilos. Se usa como fuente TypeScript, sin build propio. |
+| `packages/platform` | Interfaz común entre la web y la futura app de escritorio: `http()`, `fs()` y `capabilities()`.                   |
+| `apps/web`          | El sitio: Astro, páginas, shell, service worker, e2e y el Worker del contador de visitas.                         |
 
 El contrato para agregar herramientas está en [`docs/tool-contract.md`](docs/tool-contract.md).
 

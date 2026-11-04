@@ -1,13 +1,13 @@
-/// <reference types="vitest/config" />
-import { getViteConfig } from 'astro/config';
+import { defineConfig } from 'vitest/config';
 
-export default getViteConfig({
+// Un proyecto por paquete del workspace. La cobertura (≥ 90 %) se mide sobre la lógica pura
+// de las herramientas, como pide docs/tool-contract.md.
+export default defineConfig({
   test: {
-    include: ['src/**/*.test.ts'],
-    passWithNoTests: true,
+    projects: ['packages/*', 'apps/web'],
     coverage: {
       provider: 'v8',
-      include: ['src/tools/*/logic.ts', 'src/tools/*/detect.ts'],
+      include: ['packages/core/tools/*/logic.ts', 'packages/core/tools/*/detect.ts'],
       thresholds: { lines: 90, functions: 90, branches: 90, statements: 90 },
     },
   },

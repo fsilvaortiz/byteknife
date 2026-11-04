@@ -1,9 +1,9 @@
 # Contrato de herramienta
 
-Cada herramienta vive en `src/tools/<id>/` y el núcleo la descubre automáticamente con `import.meta.glob`. La lógica pura se separa de la interfaz, de modo que se puede probar sin navegador y reutilizar desde la detección.
+Cada herramienta vive en `packages/core/tools/<id>/` y el núcleo la descubre automáticamente con `import.meta.glob`. La lógica pura se separa de la interfaz, de modo que se puede probar sin navegador y reutilizar desde la detección.
 
 ```
-src/tools/jwt/
+packages/core/tools/jwt/
   meta.ts        id, categoría, nombre y descripción por idioma, keywords, detect()
   logic.ts       funciones puras: decode(), verifyHmac(), claimsTimeline()
   detect.ts      (opcional) lo mínimo que necesita detect(); logic.ts lo re-exporta
@@ -12,7 +12,7 @@ src/tools/jwt/
   content/       es.md, en.md, pt.md: explicación corta, ejemplos y FAQ para SEO
 ```
 
-El tipo vive en `src/core/types.ts`:
+El tipo vive en `packages/core/core/types.ts`:
 
 ```ts
 export interface ToolMeta {
@@ -34,7 +34,7 @@ export interface ToolText {
 
 ## Contenido SEO
 
-Cada idioma tiene su `content/<idioma>.md`, que la página de la herramienta muestra bajo la herramienta. El esquema está en `src/content.config.ts` y `src/core/content.test.ts` revisa que existan los tres idiomas:
+Cada idioma tiene su `content/<idioma>.md`, que la página de la herramienta muestra bajo la herramienta. El esquema está en `apps/web/src/content.config.ts` y `packages/core/core/content.test.ts` revisa que existan los tres idiomas:
 
 ```md
 ---
@@ -59,18 +59,19 @@ Explicación de 150–300 palabras: qué resuelve, opciones y casos de uso.
 - `detect()` es pura y barata, con un límite de 5 ms. Corre sobre cada pegado en el home y en la búsqueda rápida. La herramienta con mayor `confidence` se abre al presionar Enter.
 - `detect()` devuelve una clave en `label`, no un texto: el texto visible va en `i18n[locale].labels[clave]`, en los tres idiomas.
 - Si `detect()` necesita lógica no trivial (por ejemplo, decodificar o parsear), esa lógica va en `detect.ts`, que `logic.ts` re-exporta y prueba. `meta.ts` importa de `detect.ts`, nunca de `logic.ts`: el registro carga todos los `meta.ts` en cada página y, si importa `logic.ts`, cada página arrastra la lógica completa de todas las herramientas.
-- La entrada que el usuario pegó en el home o en la búsqueda llega con `takePendingInput(id)` de `src/core/store.ts`; nunca viaja en la URL.
+- La entrada que el usuario pegó en el home o en la búsqueda llega con `takePendingInput(id)` de `packages/core/core/store.ts`; nunca viaja en la URL.
 - `Tool.tsx` abre siempre con un ejemplo realista y procesa la entrada en vivo con debounce.
-- Si el primer resultado es asíncrono (una librería con `import()`, Web Crypto), `Tool.tsx` exporta `waitsForResult = true` y llama a `useReady(hayResultado, onReady)` de `src/ui/useReady.ts`. Así ToolHost mantiene la altura reservada hasta que el resultado aparece y el contenido de abajo no salta (CLS). Los elementos que aparecen después, como una píldora de estado, van donde no cambien el alto de la barra (por ejemplo, en la cabecera del panel).
-- La UI usa solo los componentes compartidos de `src/ui/` (`Pane`, `KeyValue`, `Segmented`, `CopyButton`, `Pill`, `CodeOutput`), para que el estilo sea consistente.
+- Si el primer resultado es asíncrono (una librería con `import()`, Web Crypto), `Tool.tsx` exporta `waitsForResult = true` y llama a `useReady(hayResultado, onReady)` de `packages/core/ui/useReady.ts`. Así ToolHost mantiene la altura reservada hasta que el resultado aparece y el contenido de abajo no salta (CLS). Los elementos que aparecen después, como una píldora de estado, van donde no cambien el alto de la barra (por ejemplo, en la cabecera del panel).
+- Una herramienta solo importa de `packages/core` (`ToolProps` está en `core/types.ts`), nunca de `apps/web`: la misma carpeta la monta la web y la montará la app de escritorio. `core/loaders.ts` las carga con `import()`.
+- La UI usa solo los componentes compartidos de `packages/core/ui/` (`Pane`, `KeyValue`, `Segmented`, `CopyButton`, `Pill`, `CodeOutput`), para que el estilo sea consistente.
 - Las librerías externas se cargan solo dentro de la herramienta que las necesita, con `import()` dinámico, desde `logic.ts` (por ejemplo, `await import('yaml')` dentro de la función). Si `logic.ts` las importa de forma estática, pesan en el JS inicial de la página.
 - Nada que genere código en tiempo de ejecución (`eval`, `new Function`): la CSP lo bloquea. Por eso JSON Schema usa `@cfworker/json-schema` y no ajv.
 - Las herramientas de referencia (códigos HTTP, puertos, directivas CSP) guardan sus datos en `data.ts`, con los textos de cada idioma en un `Record<Locale, string>`. Los nombres propios (protocolos, productos, cabeceras) no se traducen.
-- Datos grandes que no son código, como la base OUI de la herramienta MAC, se sirven como módulo virtual de Vite (`integrations/oui-data.mjs`) y se importan con `import()` solo donde se usan.
+- Datos grandes que no son código, como la base OUI de la herramienta MAC, se sirven como módulo virtual de Vite (`packages/core/vite/oui-data.mjs`) y se importan con `import()` solo donde se usan.
 - `logic.ts` y `detect.ts` deben tener cobertura de pruebas de al menos 90 % antes de publicarse.
 - Ninguna herramienta hace `fetch` con datos del usuario. El e2e `privacy.spec.ts` escribe un centinela en cada campo de cada herramienta y falla si aparece en la red o si sale una request a otro origen.
 - Nada de atributos `style="…"` en el HTML prerenderizado: la CSP los bloquea. Los estilos van en CSS; los que Preact aplica desde el cliente sí funcionan.
-- Al agregar una herramienta o cambiar su alto inicial, corre `pnpm build && pnpm preview` y luego `pnpm tool-heights`: regenera `src/styles/tool-heights.css`, la altura que se reserva mientras la herramienta carga para que el texto de abajo no salte. El e2e `layout.spec.ts` avisa si quedó desactualizada.
+- Al agregar una herramienta o cambiar su alto inicial, corre `pnpm build && pnpm preview` y luego `pnpm tool-heights`: regenera `apps/web/src/styles/tool-heights.css`, la altura que se reserva mientras la herramienta carga para que el texto de abajo no salte. El e2e `layout.spec.ts` avisa si quedó desactualizada.
 
 ## Referencia
 

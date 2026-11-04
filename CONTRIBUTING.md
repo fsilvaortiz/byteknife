@@ -18,7 +18,7 @@ Requiere Node 24 (ver `.nvmrc`) y pnpm 10.
 
 ```sh
 pnpm install
-pnpm exec playwright install chromium   # solo la primera vez, para los e2e
+pnpm --filter @byteknife/web exec playwright install chromium   # solo la primera vez, para los e2e
 pnpm dev
 ```
 
@@ -40,19 +40,19 @@ pnpm e2e            # Playwright + axe, offline, privacidad y CSP
 
 ## Agregar o cambiar una herramienta
 
-Cada herramienta es una carpeta en `src/tools/<id>/` y el núcleo la descubre sola. El contrato completo está en [`docs/tool-contract.md`](docs/tool-contract.md). En resumen:
+Cada herramienta es una carpeta en `packages/core/tools/<id>/` y el núcleo la descubre sola. El contrato completo está en [`docs/tool-contract.md`](docs/tool-contract.md). En resumen:
 
 - `meta.ts`: id, categoría, textos en los tres idiomas y, si aplica, `detect()`.
 - `logic.ts`: funciones puras, sin DOM. Su cobertura debe ser de al menos 90 %; el CI falla si baja.
 - `logic.test.ts`: casos normales y casos borde.
-- `Tool.tsx`: island de Preact que usa solo los componentes de `src/ui/`.
-- Un e2e en `tests/e2e/` que cubra el flujo principal.
+- `Tool.tsx`: island de Preact que usa solo los componentes de `packages/core/ui/`.
+- Un e2e en `apps/web/tests/e2e/` que cubra el flujo principal.
 
 Antes de empezar una herramienta nueva, abre una issue con la plantilla «Herramienta nueva» para acordar el alcance.
 
 ## Reglas del código
 
-- **Textos:** toda cadena visible va en `src/i18n/es.json`, `en.json` y `pt.json`. Nunca texto escrito directo en un componente. Si no hablas uno de los idiomas, deja la traducción lo mejor posible y avísalo en el PR.
+- **Textos:** toda cadena visible va en `packages/core/i18n/es.json`, `en.json` y `pt.json`. Nunca texto escrito directo en un componente. Si no hablas uno de los idiomas, deja la traducción lo mejor posible y avísalo en el PR.
 - **Peso:** el JS inicial no puede pasar de 50 KB gzip. Una librería pesada se carga con `import()` dinámico dentro de la herramienta que la usa.
 - **Accesibilidad:** todo debe poder usarse solo con teclado y pasar axe sin violaciones.
 - **Dependencias:** agrega una solo si ahorra trabajo real; explica en el PR por qué hace falta.
