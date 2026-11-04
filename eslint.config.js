@@ -7,12 +7,14 @@ import globals from 'globals';
 export default defineConfig(
   {
     ignores: [
-      'dist/',
-      '.astro/',
-      'coverage/',
-      'playwright-report/',
-      'test-results/',
+      '**/dist/',
+      '**/.astro/',
+      '**/coverage/',
+      '**/playwright-report/',
+      '**/test-results/',
       'docs/',
+      '**/lighthouse-report/',
+      '**/.lighthouseci/',
       'internal/',
     ],
   },

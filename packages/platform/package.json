@@ -1,0 +1,20 @@
+{
+  "name": "@byteknife/platform",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Interfaz común entre la web y la app de escritorio: http(), fs() y capabilities().",
+  "license": "MIT",
+  "exports": {
+    ".": "./index.ts",
+    "./web": "./web.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}

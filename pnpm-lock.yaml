@@ -7,65 +7,16 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@astrojs/preact':
-        specifier: ^6.1.1
-        version: 6.1.1(@babel/core@7.29.7)(@types/node@24.19.2)(preact@11.1.0)(yaml@2.9.1)
-      '@cfworker/json-schema':
-        specifier: 4.1.1
-        version: 4.1.1
-      '@fontsource-variable/bricolage-grotesque':
-        specifier: ^5.3.0
-        version: 5.3.0
-      '@fontsource-variable/ibm-plex-sans':
-        specifier: 5.3.0
-        version: 5.3.0
-      '@fontsource/ibm-plex-mono':
-        specifier: ^5.3.0
-        version: 5.3.0
-      '@preact/signals':
-        specifier: ^2.11.4
-        version: 2.11.4(preact@11.1.0)
-      astro:
-        specifier: ^7.4.4
-        version: 7.4.4(@types/node@24.19.2)(yaml@2.9.1)
-      marked:
-        specifier: 18.1.1
-        version: 18.1.1
-      preact:
-        specifier: ^11.1.0
-        version: 11.1.0(preact-render-to-string@6.8.2)
-      qrcode:
-        specifier: 1.5.4
-        version: 1.5.4
-      sql-formatter:
-        specifier: ^15.9.0
-        version: 15.9.0
-      yaml:
-        specifier: 2.9.1
-        version: 2.9.1
     devDependencies:
-      '@astrojs/check':
-        specifier: ^0.9.12
-        version: 0.9.12(@emnapi/runtime@1.11.3)(prettier-plugin-astro@1.1.2(prettier@3.9.10))(prettier@3.9.10)(typescript@6.0.3)
-      '@axe-core/playwright':
-        specifier: ^4.14.0
-        version: 4.14.0(playwright-core@1.64.1)
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.13.0)
-      '@playwright/test':
-        specifier: ^1.64.1
-        version: 1.64.1
       '@size-limit/file':
         specifier: ^14.3.0
         version: 14.3.0(size-limit@14.3.0)
       '@types/node':
         specifier: ^24.19.2
         version: 24.19.2
-      '@types/qrcode':
-        specifier: ^1.5.6
-        version: 1.5.6
       '@vitest/coverage-v8':
         specifier: ^5.0.5
         version: 5.0.5(vitest@5.0.5)
@@ -78,9 +29,6 @@ importers:
       globals:
         specifier: ^17.13.0
         version: 17.13.0
-      oui-data:
-        specifier: 2.1.40
-        version: 2.1.40
       prettier:
         specifier: ^3.9.10
         version: 3.9.10
@@ -96,6 +44,104 @@ importers:
       typescript-eslint:
         specifier: ^8.72.1
         version: 8.72.1(eslint@10.13.0)(typescript@6.0.3)
+      vitest:
+        specifier: ^5.0.5
+        version: 5.0.5(@types/node@24.19.2)(@vitest/coverage-v8@5.0.5)(vite@8.3.5(@types/node@24.19.2)(yaml@2.9.1))
+
+  apps/web:
+    dependencies:
+      '@astrojs/preact':
+        specifier: ^6.1.1
+        version: 6.1.1(@babel/core@7.29.7)(@types/node@24.19.2)(preact@11.1.0)(yaml@2.9.1)
+      '@byteknife/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@preact/signals':
+        specifier: ^2.11.4
+        version: 2.11.4(preact@11.1.0)
+      astro:
+        specifier: ^7.4.4
+        version: 7.4.4(@types/node@24.19.2)(yaml@2.9.1)
+      preact:
+        specifier: ^11.1.0
+        version: 11.1.0(preact-render-to-string@6.8.2)
+    devDependencies:
+      '@astrojs/check':
+        specifier: ^0.9.12
+        version: 0.9.12(@emnapi/runtime@1.11.3)(prettier-plugin-astro@1.1.2(prettier@3.9.10))(prettier@3.9.10)(typescript@6.0.3)
+      '@axe-core/playwright':
+        specifier: ^4.14.0
+        version: 4.14.0(playwright-core@1.64.1)
+      '@playwright/test':
+        specifier: ^1.64.1
+        version: 1.64.1
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.0.5
+        version: 5.0.5(@types/node@24.19.2)(@vitest/coverage-v8@5.0.5)(vite@8.3.5(@types/node@24.19.2)(yaml@2.9.1))
+
+  packages/core:
+    dependencies:
+      '@cfworker/json-schema':
+        specifier: 4.1.1
+        version: 4.1.1
+      '@fontsource-variable/bricolage-grotesque':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource-variable/ibm-plex-sans':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/ibm-plex-mono':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@preact/signals':
+        specifier: ^2.11.4
+        version: 2.11.4(preact@11.1.0)
+      marked:
+        specifier: 18.1.1
+        version: 18.1.1
+      oui-data:
+        specifier: 2.1.40
+        version: 2.1.40
+      preact:
+        specifier: ^11.1.0
+        version: 11.1.0(preact-render-to-string@6.8.2)
+      qrcode:
+        specifier: 1.5.4
+        version: 1.5.4
+      sql-formatter:
+        specifier: ^15.9.0
+        version: 15.9.0
+      yaml:
+        specifier: 2.9.1
+        version: 2.9.1
+    devDependencies:
+      '@types/node':
+        specifier: ^24.19.2
+        version: 24.19.2
+      '@types/qrcode':
+        specifier: ^1.5.6
+        version: 1.5.6
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+      vite:
+        specifier: 8.3.5
+        version: 8.3.5(@types/node@24.19.2)(yaml@2.9.1)
+      vitest:
+        specifier: ^5.0.5
+        version: 5.0.5(@types/node@24.19.2)(@vitest/coverage-v8@5.0.5)(vite@8.3.5(@types/node@24.19.2)(yaml@2.9.1))
+
+  packages/platform:
+    devDependencies:
+      '@types/node':
+        specifier: ^24.19.2
+        version: 24.19.2
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
       vitest:
         specifier: ^5.0.5
         version: 5.0.5(@types/node@24.19.2)(@vitest/coverage-v8@5.0.5)(vite@8.3.5(@types/node@24.19.2)(yaml@2.9.1))
