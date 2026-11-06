@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'preact/hooks';
-import { dayOfYear, isoUtc, isoWeek, unixSeconds } from '@byteknife/core/core/now';
-import { t, type Locale } from '@byteknife/core/i18n';
-import CopyButton from '@byteknife/core/ui/CopyButton';
-import { useMounted } from '@byteknife/core/ui/useMounted';
+import { dayOfYear, isoUtc, isoWeek, unixSeconds } from '../core/now';
+import { t, type Locale } from '../i18n';
+import CopyButton from '../ui/CopyButton';
+import { useMounted } from '../ui/useMounted';
 
 export default function NowStrip({ locale }: { locale: Locale }) {
   const mounted = useMounted();

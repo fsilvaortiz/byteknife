@@ -22,11 +22,13 @@ pnpm lighthouse # Lighthouse CI con los umbrales del plan
 
 Es un workspace de pnpm. Los comandos de arriba se corren desde la raíz.
 
-| Carpeta             | Contenido                                                                                                         |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `packages/core`     | Herramientas (`tools/<id>/`), componentes de UI, i18n y estilos. Se usa como fuente TypeScript, sin build propio. |
-| `packages/platform` | Interfaz común entre la web y la futura app de escritorio: `http()`, `fs()` y `capabilities()`.                   |
-| `apps/web`          | El sitio: Astro, páginas, shell, service worker, e2e y el Worker del contador de visitas.                         |
+| Carpeta               | Contenido                                                                                                         |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `packages/core`       | Herramientas (`tools/<id>/`), componentes de UI, i18n y estilos. Se usa como fuente TypeScript, sin build propio. |
+| `packages/core/shell` | Componentes del shell que comparten la web y la app: búsqueda, detección al pegar, favoritos y `ToolHost`.        |
+| `packages/platform`   | Interfaz común entre la web y la app de escritorio: `http()`, `fs()` y `capabilities()`.                          |
+| `apps/web`            | El sitio: Astro, páginas, service worker, e2e y el Worker del contador de visitas.                                |
+| `apps/desktop`        | ByteKnife para Mac (Tauri 2). Ver [`docs/desktop.md`](docs/desktop.md).                                           |
 
 El contrato para agregar herramientas está en [`docs/tool-contract.md`](docs/tool-contract.md).
 

@@ -1,8 +1,8 @@
 import { useEffect } from 'preact/hooks';
-import { favorites, recordVisit, toggleFavorite } from '@byteknife/core/core/store';
-import { t, type Locale } from '@byteknife/core/i18n';
-import { showToast } from '@byteknife/core/ui/toastStore';
-import { useMounted } from '@byteknife/core/ui/useMounted';
+import { favorites, recordVisit, toggleFavorite } from '../core/store';
+import { t, type Locale } from '../i18n';
+import { showToast } from '../ui/toastStore';
+import { useMounted } from '../ui/useMounted';
 
 export default function FavoriteButton({ locale, id }: { locale: Locale; id: string }) {
   const mounted = useMounted();

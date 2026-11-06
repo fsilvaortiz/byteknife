@@ -19,7 +19,7 @@ export interface HttpRequest {
   method: string;
   url: string;
   headers: [name: string, value: string][];
-  body?: string | Uint8Array;
+  body?: string | Uint8Array<ArrayBuffer>;
 }
 
 export interface HttpResponse {

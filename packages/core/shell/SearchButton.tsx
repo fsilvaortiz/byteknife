@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'preact/hooks';
-import { t, type Locale } from '@byteknife/core/i18n';
+import { t, type Locale } from '../i18n';
 import { openPalette } from './paletteState';
 
 export default function SearchButton({ locale }: { locale: Locale }) {

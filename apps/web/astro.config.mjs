@@ -24,7 +24,7 @@ export default defineConfig({
             groups: [
               {
                 name: 'app',
-                test: /node_modules[\\/](preact|@preact)|packages[\\/]core[\\/](core|i18n)[\\/]|apps[\\/]web[\\/]src[\\/](components|lib)[\\/]/,
+                test: /node_modules[\\/](preact|@preact)|packages[\\/]core[\\/](core|i18n|shell)[\\/]|apps[\\/]web[\\/]src[\\/]lib[\\/]/,
               },
               // Componentes de packages/core/ui: solo los usan las herramientas, juntos en un chunk.
               { name: 'ui', test: /packages[\\/]core[\\/]ui[\\/]/ },

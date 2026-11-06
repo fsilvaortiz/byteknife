@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { detectAll } from '@byteknife/core/core/detect';
-import { openTool } from '@byteknife/core/core/navigate';
-import { searchTools } from '@byteknife/core/core/search';
-import { t, type Locale } from '@byteknife/core/i18n';
+import { detectAll } from '../core/detect';
+import { openTool } from '../core/navigate';
+import { searchTools } from '../core/search';
+import { t, type Locale } from '../i18n';
 import { closePalette, openPalette, paletteOpen } from './paletteState';
 
 interface Item {
