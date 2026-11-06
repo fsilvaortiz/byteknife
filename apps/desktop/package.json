@@ -1,0 +1,35 @@
+{
+  "name": "@byteknife/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ByteKnife para Mac: app Tauri 2 con un shell SPA (Vite + Preact) que monta las herramientas de @byteknife/core.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "tauri": "tauri",
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "@byteknife/core": "workspace:*",
+    "@byteknife/platform": "workspace:*",
+    "@preact/signals": "^2.11.4",
+    "@tauri-apps/api": "2.12.4",
+    "@tauri-apps/plugin-process": "2.4.0",
+    "@tauri-apps/plugin-updater": "2.14.0",
+    "preact": "^11.1.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "@preact/preset-vite": "2.10.6",
+    "@tauri-apps/cli": "2.12.3",
+    "@types/node": "^24.19.2",
+    "typescript": "^6.0.3",
+    "vite": "8.3.5",
+    "vitest": "^5.0.5"
+  }
+}

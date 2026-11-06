@@ -14,6 +14,8 @@ export default defineConfig(
       '**/test-results/',
       'docs/',
       '**/lighthouse-report/',
+      '**/src-tauri/target/',
+      '**/src-tauri/gen/',
       '**/.lighthouseci/',
       'internal/',
     ],

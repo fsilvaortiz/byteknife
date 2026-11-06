@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 // de las herramientas, como pide docs/tool-contract.md.
 export default defineConfig({
   test: {
-    projects: ['packages/*', 'apps/web'],
+    projects: ['packages/*', 'apps/web', 'apps/desktop'],
     coverage: {
       provider: 'v8',
       include: ['packages/core/tools/*/logic.ts', 'packages/core/tools/*/detect.ts'],

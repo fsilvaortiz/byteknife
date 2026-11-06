@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "pnpm --filter @byteknife/web dev",
-    "typecheck": "pnpm --filter './packages/*' typecheck",
+    "typecheck": "pnpm --filter './packages/*' --filter @byteknife/desktop typecheck",
     "build": "pnpm typecheck && pnpm --filter @byteknife/web build",
     "preview": "pnpm --filter @byteknife/web preview",
     "test": "vitest run --coverage",
@@ -22,7 +22,10 @@
     "format:check": "prettier --check .",
     "size": "pnpm --filter @byteknife/web size",
     "lighthouse": "pnpm --filter @byteknife/web lighthouse",
-    "tool-heights": "pnpm --filter @byteknife/web tool-heights"
+    "tool-heights": "pnpm --filter @byteknife/web tool-heights",
+    "desktop:dev": "pnpm --filter @byteknife/desktop tauri dev",
+    "desktop:build": "CI=true pnpm --filter @byteknife/desktop tauri build --target universal-apple-darwin",
+    "desktop:e2e": "pnpm --filter @byteknife/desktop e2e"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

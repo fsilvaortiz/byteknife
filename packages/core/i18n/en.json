@@ -799,5 +799,13 @@
   "oapi.s.dupOperationId": "Duplicate operationId “{id}”: already used by {other}",
   "oapi.s.securityMissing": "Security scheme “{name}” is not defined",
   "oapi.s.unusedSchema": "Schema “{name}” is not used by any $ref",
-  "curl.insecureSpring": "The command uses -k, but the code does not disable TLS verification: in Spring Boot that is configured on the underlying ClientHttpRequestFactory or HttpClient. Avoid it outside development."
+  "curl.insecureSpring": "The command uses -k, but the code does not disable TLS verification: in Spring Boot that is configured on the underlying ClientHttpRequestFactory or HttpClient. Avoid it outside development.",
+  "desktop.lede": "JSON, JWT, Base64, hashes, cron, regex, IP/CIDR, certificates, SQL and more. Everything runs on your Mac: what you paste here never travels to a server.",
+  "desktop.footerPrivacy": "No accounts, no telemetry: everything is computed inside this app.",
+  "desktop.footerStorage": "Favorites and recents are stored only on this Mac.",
+  "update.available": "A new version of ByteKnife is available ({version}).",
+  "update.install": "Install and restart",
+  "update.installing": "Installing the update…",
+  "update.later": "Later",
+  "update.failed": "The update could not be installed. Try again later."
 }

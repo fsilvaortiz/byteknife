@@ -1,8 +1,8 @@
-import { toolPath } from '@byteknife/core/core/paths';
-import { toolById } from '@byteknife/core/core/registry';
-import { favorites, recents } from '@byteknife/core/core/store';
-import { t, type Locale } from '@byteknife/core/i18n';
-import { useMounted } from '@byteknife/core/ui/useMounted';
+import { toolPath } from '../core/paths';
+import { toolById } from '../core/registry';
+import { favorites, recents } from '../core/store';
+import { t, type Locale } from '../i18n';
+import { useMounted } from '../ui/useMounted';
 
 const MAX_SHOWN_RECENTS = 6;
 

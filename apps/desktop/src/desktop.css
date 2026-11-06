@@ -1,0 +1,18 @@
+/* Solo de la app de escritorio. Lo demás viene de @byteknife/core/styles. */
+.update-bar {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100vw - 32px);
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.15);
+  font-size: 14px;
+  z-index: 50;
+}

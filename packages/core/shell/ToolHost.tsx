@@ -1,9 +1,9 @@
 import type { ComponentType } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
-import { toolLoader } from '@byteknife/core/core/loaders';
-import { takePendingInput } from '@byteknife/core/core/store';
-import type { ToolProps } from '@byteknife/core/core/types';
-import { t, type Locale } from '@byteknife/core/i18n';
+import { toolLoader } from '../core/loaders';
+import { takePendingInput } from '../core/store';
+import type { ToolProps } from '../core/types';
+import { t, type Locale } from '../i18n';
 
 /** Si una herramienta no llama a onReady, la reserva se libera igual tras este tiempo. */
 const READY_TIMEOUT = 4000;

@@ -7,7 +7,8 @@
   "license": "MIT",
   "exports": {
     ".": "./index.ts",
-    "./web": "./web.ts"
+    "./web": "./web.ts",
+    "./desktop": "./desktop.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
@@ -16,5 +17,9 @@
     "@types/node": "^24.19.2",
     "typescript": "^6.0.3",
     "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "@tauri-apps/plugin-fs": "2.7.1",
+    "@tauri-apps/plugin-http": "2.8.3"
   }
 }

@@ -41,3 +41,25 @@ jobs:
           name: playwright-report
           path: apps/web/playwright-report/
           retention-days: 7
+
+  # App de escritorio: el SPA en WebKit, el motor que usa Tauri en macOS. Rust no se compila
+  # en cada PR (tarda ~10 min en macOS); lo hace desktop-release.yml al publicar.
+  desktop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @byteknife/desktop typecheck
+      - run: pnpm --filter @byteknife/desktop exec playwright install --with-deps webkit
+      - run: pnpm desktop:e2e
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-playwright-report
+          path: apps/desktop/playwright-report/
+          retention-days: 7

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { detectAll, type Hit } from '@byteknife/core/core/detect';
-import { openTool } from '@byteknife/core/core/navigate';
-import { toolById } from '@byteknife/core/core/registry';
-import { t, type Locale } from '@byteknife/core/i18n';
+import { detectAll, type Hit } from '../core/detect';
+import { openTool } from '../core/navigate';
+import { toolById } from '../core/registry';
+import { t, type Locale } from '../i18n';
 
 const FALLBACK_TOOLS = ['json', 'base64', 'hash', 'case'];
 

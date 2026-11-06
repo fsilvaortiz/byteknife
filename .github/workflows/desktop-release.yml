@@ -1,0 +1,83 @@
+name: Desktop release
+
+# Compila ByteKnife para Mac (binario universal) y deja un borrador de Release en GitHub con
+# el .dmg, el .app.tar.gz firmado para el updater y latest.json. El updater de la app lee
+# latest.json de la última Release publicada: hay que publicar el borrador a mano.
+#
+# Secrets:
+#   TAURI_SIGNING_PRIVATE_KEY, TAURI_SIGNING_PRIVATE_KEY_PASSWORD  obligatorios (updater)
+#   APPLE_CERTIFICATE, APPLE_CERTIFICATE_PASSWORD, APPLE_SIGNING_IDENTITY,
+#   APPLE_API_ISSUER, APPLE_API_KEY, APPLE_API_KEY_P8                opcionales: sin ellos la
+#   app sale sin firma de Apple ni notarización (ver docs/desktop.md).
+
+on:
+  push:
+    tags: ['desktop-v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            apps/desktop/src-tauri/target
+          key: cargo-${{ runner.os }}-${{ hashFiles('apps/desktop/src-tauri/Cargo.lock') }}
+      - run: pnpm install --frozen-lockfile
+      # Firma y notarización de Apple: solo si están los secrets. Si llegan vacíos, Tauri
+      # intentaría firmar con un certificado vacío, por eso se exportan solo cuando existen.
+      - name: Firma de Apple (opcional)
+        env:
+          CERT: ${{ secrets.APPLE_CERTIFICATE }}
+          CERT_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          API_KEY: ${{ secrets.APPLE_API_KEY }}
+          API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+        run: |
+          if [ -z "$CERT" ]; then
+            echo "::warning::Sin APPLE_CERTIFICATE: la app sale sin firma de Apple ni notarización."
+            exit 0
+          fi
+          {
+            echo "APPLE_CERTIFICATE=$CERT"
+            echo "APPLE_CERTIFICATE_PASSWORD=$CERT_PASSWORD"
+            echo "APPLE_SIGNING_IDENTITY=$IDENTITY"
+          } >> "$GITHUB_ENV"
+          if [ -n "$API_KEY_P8" ]; then
+            mkdir -p ~/private_keys
+            printf '%s' "$API_KEY_P8" > ~/private_keys/AuthKey_$API_KEY.p8
+            {
+              echo "APPLE_API_ISSUER=$API_ISSUER"
+              echo "APPLE_API_KEY=$API_KEY"
+              echo "APPLE_API_KEY_PATH=$HOME/private_keys/AuthKey_$API_KEY.p8"
+            } >> "$GITHUB_ENV"
+          fi
+      - uses: tauri-apps/tauri-action@1deb371b0cd8bd54025b384f1cd735e725c4060f # action-v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          projectPath: apps/desktop
+          tauriScript: pnpm tauri
+          args: --target universal-apple-darwin
+          tagName: desktop-v__VERSION__
+          releaseName: ByteKnife para Mac __VERSION__
+          releaseBody: Descarga el .dmg. Notas en docs/desktop.md.
+          releaseDraft: true
+          prerelease: false
+          uploadUpdaterJson: true

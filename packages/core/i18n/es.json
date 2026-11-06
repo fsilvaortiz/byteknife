@@ -799,5 +799,13 @@
   "oapi.s.dupOperationId": "operationId «{id}» repetido: ya lo usa {other}",
   "oapi.s.securityMissing": "El esquema de seguridad «{name}» no está definido",
   "oapi.s.unusedSchema": "El esquema «{name}» no se usa en ningún $ref",
-  "curl.insecureSpring": "El comando usa -k, pero el código no desactiva la verificación TLS: en Spring Boot eso se configura en el ClientHttpRequestFactory o el HttpClient subyacente. Evítalo fuera de desarrollo."
+  "curl.insecureSpring": "El comando usa -k, pero el código no desactiva la verificación TLS: en Spring Boot eso se configura en el ClientHttpRequestFactory o el HttpClient subyacente. Evítalo fuera de desarrollo.",
+  "desktop.lede": "JSON, JWT, Base64, hashes, cron, regex, IP/CIDR, certificados, SQL y más. Todo corre en tu Mac: lo que pegas aquí no viaja a ningún servidor.",
+  "desktop.footerPrivacy": "Sin cuentas ni telemetría: el cálculo ocurre en esta app.",
+  "desktop.footerStorage": "Favoritos y recientes se guardan solo en este Mac.",
+  "update.available": "Hay una versión nueva de ByteKnife ({version}).",
+  "update.install": "Instalar y reiniciar",
+  "update.installing": "Instalando la actualización…",
+  "update.later": "Más tarde",
+  "update.failed": "No se pudo instalar la actualización. Inténtalo de nuevo más tarde."
 }
